@@ -1,0 +1,7 @@
+# Ignorer Python-cachefiler
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ignorer virtuelle miljøer
+.venv/
