@@ -81,6 +81,14 @@ class MainWindow(QMainWindow):
         exit_action = QAction("Exit", self)
         exit_action.triggered.connect(self.close)
         file_menu.addAction(exit_action)
+        '''
+        math_menu = menubar.addMenu("Matematik")
+        vector_screen = QAction("Vectorer", self)
+        '''
+        chemesty_menu = menubar.addMenu("Kemi")
+        enthalpy_scree = QAction("Entalpi beregner", self)
+        enthalpy_scree.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.enthalpy_screen))
+        chemesty_menu.addAction(enthalpy_scree)
 
         formula_menu = menubar.addMenu("Formula Collection")
         x_squared = QAction("x²", self)
