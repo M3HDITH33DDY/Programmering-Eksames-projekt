@@ -7,6 +7,10 @@ from PySide6.QtCore import Qt, QUrl, QSettings, QDir
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEnginePage
 
+#PDF læser er hentet udefra, og ændret således, det kan anvendes i programmet
+#Author: BBC-Esq
+#Link til Originale program: https://github.com/BBC-Esq/PySide6_PDF_Viewer/blob/main/pyside6_pdfviewer.py
+
 class PDFFileSystemModel(QStandardItemModel):
     def __init__(self, parent=None):
         super().__init__(parent)
