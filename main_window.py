@@ -120,10 +120,6 @@ class MainWindow(QMainWindow):
         game_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.game_screen))
         file_menu.addAction(game_action)
 
-        formula_collection = QAction("Formelsamling", self)
-        formula_collection.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.formulacollection_screen))
-        file_menu.addAction(formula_collection)
-
         pdf_viewer_action = QAction("PDF-viser", self)
         pdf_viewer_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.pdf_viewer_screen))
         file_menu.addAction(pdf_viewer_action)
