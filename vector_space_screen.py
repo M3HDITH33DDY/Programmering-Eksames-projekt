@@ -4,6 +4,7 @@ from PySide6.QtWidgets import (
     QRadioButton, QTextEdit, QGroupBox
 )
 from PySide6.QtCore import Qt
+from vector_calculations import VectorOperations
 
 class VectorCalculator(QWidget):
     def __init__(self):
@@ -107,32 +108,20 @@ class VectorCalculator(QWidget):
         result_text += f"Coordinate 1 ({type1}): {coord1}\n"
         result_text += f"Coordinate 2 ({type2}): {coord2}\n"
 
-        # Perform calculations
+        # Perform calculations using VectorOperations
         try:
             if operation == "Add":
-                if type1 == "Point" and type2 == "Point":
-                    result_text += "Error: Addition not allowed between two points."
-                else:
-                    result = coord1 + coord2
-                    result_text += f"Result: {result}"
+                result = VectorOperations.add(coord1, coord2, type1, type2)
+                result_text += f"Result: {result}"
             elif operation == "Subtract":
-                if type1 == "Point" and type2 == "Vector":
-                    result_text += "Error: Cannot subtract vector from point."
-                else:
-                    result = coord1 - coord2
-                    result_text += f"Result: {result}"
+                result = VectorOperations.subtract(coord1, coord2, type1, type2)
+                result_text += f"Result: {result}"
             elif operation == "Dot Product":
-                if type1 == "Point" or type2 == "Point":
-                    result_text += "Error: Dot product requires two vectors."
-                else:
-                    result = np.dot(coord1, coord2)
-                    result_text += f"Result: {result}"
+                result = VectorOperations.dot_product(coord1, coord2, type1, type2)
+                result_text += f"Result: {result}"
             elif operation == "Cross Product":
-                if type1 == "Point" or type2 == "Point":
-                    result_text += "Error: Cross product requires two vectors."
-                else:
-                    result = np.cross(coord1, coord2)
-                    result_text += f"Result: {result}"
+                result = VectorOperations.cross_product(coord1, coord2, type1, type2)
+                result_text += f"Result: {result}"
             else:
                 result_text += "Error: Unknown operation."
         except Exception as e:
