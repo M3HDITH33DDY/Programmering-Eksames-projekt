@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QApplication
-from PySide6.QtGui import QIcon, QDrag, QDragEnterEvent, QDropEvent, QAction
+from PySide6.QtGui import QIcon, QDrag, QDragEnterEvent, QDropEvent
 from PySide6.QtCore import Qt, QSize, QPoint, QMimeData
 
 class DraggableButton(QPushButton):
@@ -16,21 +16,25 @@ class DraggableButton(QPushButton):
                 font-size: 16px;
                 font-weight: bold;
                 font-family: Arial, sans-serif;
-                
             }
             QPushButton:hover {
                 background-color: #16A34A;
-                
+            }
+            QPushButton:pressed {
+                background-color: #14532D;
             }
         """)
         self.setAcceptDrops(True)
         self.setIcon(QIcon("picture.png"))
         self.setIconSize(QSize(48, 48))
+        
+        # Connect the clicked signal to a handler
+        self.clicked.connect(self.on_button_pressed)
 
     def mousePressEvent(self, e):
         if e.button() == Qt.LeftButton and self.drag_enabled:
             self.drag_start_position = e.pos()
-        super().mousePressEvent(e)
+        super().mousePressEvent(e)  # Ensure the clicked signal is emitted
 
     def mouseMoveEvent(self, e):
         if not (e.buttons() & Qt.LeftButton) or not self.drag_enabled:
@@ -60,6 +64,10 @@ class DraggableButton(QPushButton):
     def set_drag_enabled(self, enabled):
         self.drag_enabled = enabled
 
+    def on_button_pressed(self):
+        # Action to perform when the button is pressed
+        print(f"{self.text()} pressed!")
+
 class HomeScreen(QWidget):
     def __init__(self):
         super().__init__()
@@ -68,7 +76,7 @@ class HomeScreen(QWidget):
         self.layout.setSpacing(20)
         self.layout.setContentsMargins(20, 20, 20, 20)
         
-        self.title = QLabel("Welcome to the Home Screen!")
+        self.title = QLabel("Velkommen til IMV!")
         self.title.setAlignment(Qt.AlignCenter)
         self.title.setStyleSheet("""
             font-size: 24px;
@@ -95,7 +103,6 @@ class HomeScreen(QWidget):
             border-radius: 10px;
             padding: 8px;
             letter-spacing: 1px;
-            
         """)
         self.row1_inner_layout.addWidget(self.matematik_label)
         
@@ -120,7 +127,6 @@ class HomeScreen(QWidget):
             border-radius: 10px;
             padding: 8px;
             letter-spacing: 1px;
-            
         """)
         self.row2_inner_layout.addWidget(self.kemi_label)
         
@@ -149,3 +155,10 @@ class HomeScreen(QWidget):
     def toggle_drag(self, enabled):
         for button in self.buttons:
             button.set_drag_enabled(enabled)
+
+# Example usage
+if __name__ == "__main__":
+    app = QApplication([])
+    window = HomeScreen()
+    window.show()
+    app.exec()

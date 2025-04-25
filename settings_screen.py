@@ -2,46 +2,83 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLabel
 from PySide6.QtCore import Qt
 
 class SettingsScreen(QWidget):
+    """En skærm til indstillinger, der tillader brugeren at aktivere/deaktivere trækfunktion i mørk tilstand."""
+
     def __init__(self):
         super().__init__()
+        # Set dark mode stylesheet
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #1F2937;
+                color: #F9FAFB;
+                font-family: Arial, sans-serif;
+            }
+        """)
+
+        # Main layout with consistent margins and spacing
         layout = QVBoxLayout()
-        label = QLabel("Settings")
-        label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(label)
-        
-        toggle_mode_button = QPushButton("Toggle Mode")
-        toggle_mode_button.clicked.connect(self.toggle_mode)
-        layout.addWidget(toggle_mode_button)
-        
-        self.mode_label = QLabel("Current Mode: Light")
-        self.mode_label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(self.mode_label)
-        
-        toggle_drag_button = QPushButton("Toggle Button Drag")
+        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setSpacing(10)
+
+        # Title label
+        title_label = QLabel("Indstillinger")
+        title_label.setAlignment(Qt.AlignCenter)
+        title_label.setStyleSheet("""
+            font-size: 24px;
+            font-weight: bold;
+            color: #F9FAFB;
+            padding: 10px;
+        """)
+        layout.addWidget(title_label)
+
+        # Toggle drag button
+        toggle_drag_button = QPushButton("Skift Træk")
+        toggle_drag_button.setFixedHeight(40)
+        toggle_drag_button.setStyleSheet("""
+            QPushButton {
+                background-color: #2DD4BF;
+                color: #1F2937;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: bold;
+                padding: 8px;
+                border: none;
+            }
+            QPushButton:hover {
+                background-color: #5EEAD4;
+            }
+            QPushButton:pressed {
+                background-color: #14B8A6;
+            }
+        """)
         toggle_drag_button.clicked.connect(self.toggle_drag)
         layout.addWidget(toggle_drag_button)
-        
-        self.drag_label = QLabel("Drag: Disabled")
+
+        # Drag status label
+        self.drag_label = QLabel("Træk: Deaktiveret")
         self.drag_label.setAlignment(Qt.AlignCenter)
+        self.drag_label.setStyleSheet("""
+            font-size: 14px;
+            color: #D1D5DB;
+            padding: 5px;
+        """)
         layout.addWidget(self.drag_label)
-        
+
+        # Add stretch to push content to the top
         layout.addStretch()
         self.setLayout(layout)
-        self.is_dark_mode = False
+
+        # Initialize state variable
         self.drag_enabled = False
 
-    def toggle_mode(self):
-        self.is_dark_mode = not self.is_dark_mode
-        if self.is_dark_mode:
-            self.mode_label.setText("Current Mode: Dark")
-            self.setStyleSheet("background-color: #333; color: white;")
-        else:
-            self.mode_label.setText("Current Mode: Light")
-            self.setStyleSheet("")
-
     def toggle_drag(self):
+        """
+        Aktiverer eller deaktiverer trækfunktionen for knapper på hjemmeskærmen.
+
+        Opdaterer hovedvinduet og statuslabel for at afspejle træktilstanden.
+        """
         self.drag_enabled = not self.drag_enabled
         main_window = self.window()
         home_screen = main_window.home_screen
         home_screen.toggle_drag(self.drag_enabled)
-        self.drag_label.setText(f"Drag: {'Enabled' if self.drag_enabled else 'Disabled'}")
+        self.drag_label.setText(f"Træk: {'Aktiveret' if self.drag_enabled else 'Deaktiveret'}")
