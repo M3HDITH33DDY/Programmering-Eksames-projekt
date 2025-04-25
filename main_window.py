@@ -9,6 +9,7 @@ from graph_war import GraphWarScreen
 from formula_collection import FormulaCollectionScreen
 from pdf_viewer import PDFViewerScreen
 from enthalpy_screen import EnthalpyScreen
+from vector_space_screen import VectorCalculator
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -19,13 +20,14 @@ class MainWindow(QMainWindow):
         self.stacked_widget = QStackedWidget()
         self.setCentralWidget(self.stacked_widget)
 
-        self.home_screen =akon = HomeScreen()
+        self.home_screen = HomeScreen()
         self.editor_screen = EditorScreen()
         self.settings_screen = SettingsScreen()
         self.game_screen = GraphWarScreen()
         self.enthalpy_screen = EnthalpyScreen()
         self.formulacollection_screen = FormulaCollectionScreen()
         self.pdf_viewer_screen = PDFViewerScreen()
+        self.vector_calculator_screen = VectorCalculator()
 
         self.stacked_widget.addWidget(self.home_screen)
         self.stacked_widget.addWidget(self.editor_screen)
@@ -34,6 +36,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.game_screen)
         self.stacked_widget.addWidget(self.formulacollection_screen)
         self.stacked_widget.addWidget(self.pdf_viewer_screen)
+        self.stacked_widget.addWidget(self.vector_calculator_screen)
 
         self.create_menu_bar()
 
@@ -77,10 +80,12 @@ class MainWindow(QMainWindow):
         exit_action = QAction("Exit", self)
         exit_action.triggered.connect(self.close)
         file_menu.addAction(exit_action)
-        '''
+
         math_menu = menubar.addMenu("Matematik")
-        vector_screen = QAction("Vectorer", self)
-        '''
+        vector_action = QAction("Vectorer", self)
+        vector_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.vector_calculator_screen))
+        math_menu.addAction(vector_action)
+
         chemesty_menu = menubar.addMenu("Kemi")
         enthalpy_scree = QAction("Entalpi beregner", self)
         enthalpy_scree.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.enthalpy_screen))
@@ -102,4 +107,3 @@ class MainWindow(QMainWindow):
         sine_x = QAction("sin(x)", self)
         sine_x.triggered.connect(lambda: self.game_screen.function_input.setText("math.sin(x / 50)"))
         formula_menu.addAction(sine_x)
-    
