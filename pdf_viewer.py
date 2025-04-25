@@ -114,13 +114,13 @@ class PDFViewerScreen(QWidget):
     def on_tree_expanded(self, index):
         item = self.tree_model.itemFromIndex(index)
         file_path = item.data(Qt.UserRole)
-        if item.rowCount() == 1 and item.child(0).text() == "Loading...":
+        if item.rowCount() == 1 and item.child(0).text() == "Indlæser...":
             item.removeRow(0)
             self.tree_model.populate_model(item, file_path)
     
     def open_file_dialog(self):
         file_dialog = QFileDialog()
-        filename, _ = file_dialog.getOpenFileName(self, "Open File", "", "All Files (*)")
+        filename, _ = file_dialog.getOpenFileName(self, "Åben PDF fil", "", "All Files (*)")
         if filename:
             self.load_file(filename)
     

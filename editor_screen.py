@@ -1,3 +1,4 @@
+import os
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QTextEdit, QPushButton, QFileDialog
 from PySide6.QtCore import Qt
 
@@ -139,13 +140,15 @@ class EditorScreen(QWidget):
         Gemmer teksteditorens indhold til den aktuelt indlæste fil eller en ny fil.
 
         Hvis en fil er indlæst, overskrives den; ellers åbnes en fildialog for at vælge filnavn.
+        Viser kun filnavnet i statusbeskeden.
         """
         text = self.text_edit.toPlainText()
         if self.current_file:
             try:
                 with open(self.current_file, "w", encoding="utf-8") as f:
                     f.write(text)
-                self.status_label.setText(f"Tekst gemt til '{self.current_file}'")
+                file_name = os.path.basename(self.current_file)
+                self.status_label.setText(f"Tekst gemt til '{file_name}'")
             except Exception as e:
                 self.status_label.setText(f"Fejl ved gemning: {str(e)}")
         else:
@@ -155,7 +158,8 @@ class EditorScreen(QWidget):
                     with open(file_name, "w", encoding="utf-8") as f:
                         f.write(text)
                     self.current_file = file_name
-                    self.status_label.setText(f"Tekst gemt til '{file_name}'")
+                    display_name = os.path.basename(file_name)
+                    self.status_label.setText(f"Tekst gemt til '{display_name}'")
                 except Exception as e:
                     self.status_label.setText(f"Fejl ved gemning: {str(e)}")
             else:
@@ -165,7 +169,7 @@ class EditorScreen(QWidget):
         """
         Indlæser tekst fra en brugerdefineret fil og viser den i teksteditoren.
 
-        Åbner en fildialog for at vælge en tekstfil; opdaterer den aktuelt indlæste fil.
+        Åbner en fildialog for at vælge en tekstfil; opdaterer den aktuelle fil og viser kun filnavnet i statusbeskeden.
         """
         file_name, _ = QFileDialog.getOpenFileName(self, "Indlæs Tekst", "", "Text Files (*.txt);;All Files (*)")
         if file_name:
@@ -174,7 +178,8 @@ class EditorScreen(QWidget):
                     text = f.read()
                 self.text_edit.setPlainText(text)
                 self.current_file = file_name
-                self.status_label.setText(f"Tekst indlæst fra '{file_name}'")
+                display_name = os.path.basename(file_name)
+                self.status_label.setText(f"Tekst indlæst fra '{display_name}'")
             except Exception as e:
                 self.status_label.setText(f"Fejl ved indlæsning: {str(e)}")
         else:
