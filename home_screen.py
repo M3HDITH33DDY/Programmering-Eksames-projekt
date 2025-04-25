@@ -16,11 +16,11 @@ class DraggableButton(QPushButton):
                 font-size: 16px;
                 font-weight: bold;
                 font-family: Arial, sans-serif;
-                box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+                
             }
             QPushButton:hover {
                 background-color: #16A34A;
-                box-shadow: 0 0 8px rgba(22, 163, 74, 0.5);
+                
             }
         """)
         self.setAcceptDrops(True)
@@ -95,7 +95,7 @@ class HomeScreen(QWidget):
             border-radius: 10px;
             padding: 8px;
             letter-spacing: 1px;
-            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+            
         """)
         self.row1_inner_layout.addWidget(self.matematik_label)
         
@@ -120,7 +120,7 @@ class HomeScreen(QWidget):
             border-radius: 10px;
             padding: 8px;
             letter-spacing: 1px;
-            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+            
         """)
         self.row2_inner_layout.addWidget(self.kemi_label)
         
