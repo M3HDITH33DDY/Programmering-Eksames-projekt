@@ -7,46 +7,47 @@ from PySide6.QtCore import Qt
 class EnthalpyScreen(QWidget):
     def __init__(self):
         super().__init__()
+        #Henvisning til navendte JSON-fil
         self.json_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "enthalpy_data.json")
         self.data = self.load_data()
         
         # Main layout
         layout = QVBoxLayout()
         
-        # Title
+        # Titel indenpå siden i centrum
         title = QLabel("Molar Standard Entalpi Beregner")
-        title.setAlignment(Qt.AlignCenter)
+        title.setAlignment(Qt.AlignCenter) #Alligner tekst til centrum
         layout.addWidget(title)
         
-        # Table to display compounds and their ΔHf°
+        # Tabel til visning af molekyle samt ΔH-værdi
         self.table = QTableWidget()
-        self.table.setColumnCount(2)
+        self.table.setColumnCount(2) #2 kolonner
         self.table.setHorizontalHeaderLabels(["Molekyle", "ΔHf° (kJ/mol)"])
         self.populate_table()
         layout.addWidget(self.table)
         
-        # Reaction input
+        # Input for reaktion
         reaction_layout = QHBoxLayout()
         self.reaction_input = QLineEdit()
-        self.reaction_input.setPlaceholderText("Indsæt reaktion (f.eks., 2H2 + O2 -> 2H2O)")
+        self.reaction_input.setPlaceholderText("Indsæt reaktion (f.eks., 2H2 + O2 -> 2H2O)") #Pladsholder, indtil bruger skriver
         reaction_layout.addWidget(self.reaction_input)
-        
+        #Knap
         calculate_button = QPushButton("Beregn ΔH°")
         calculate_button.clicked.connect(self.calculate_enthalpy)
         reaction_layout.addWidget(calculate_button)
         layout.addLayout(reaction_layout)
         
-        # Result label
-        self.result_label = QLabel("Indsæt reaktion for at beregne ΔH°")
+        # Resultat
+        self.result_label = QLabel("Indsæt reaktion for at beregne ΔH°") #pladsholder
         self.result_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.result_label)
         
-        # Input fields for adding new compounds
+        # Input område for navnet af nyt molekyle
         add_layout = QHBoxLayout()
         self.compound_input = QLineEdit()
         self.compound_input.setPlaceholderText("Nyt molekyle (f.eks., CO2)")
         add_layout.addWidget(self.compound_input)
-        
+        #Input for data for det nye molekyle
         self.delta_h_f_input = QLineEdit()
         self.delta_h_f_input.setPlaceholderText("ΔHf° (kJ/mol)")
         add_layout.addWidget(self.delta_h_f_input)
