@@ -13,8 +13,8 @@ from enthalpy_screen import EnthalpyScreen
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Multi-Screen Application")
-        self.setGeometry(100, 100, 800, 600)
+        self.setWindowTitle("Multi Program")
+        self.setGeometry(100, 100, 1200, 800)
 
         self.stacked_widget = QStackedWidget()
         self.setCentralWidget(self.stacked_widget)
@@ -73,11 +73,7 @@ class MainWindow(QMainWindow):
         open_pdf_action = QAction("Open PDF", self)
         open_pdf_action.triggered.connect(self.pdf_viewer_screen.open_file_dialog)
         file_menu.addAction(open_pdf_action)
-
-        recent_menu = QMenu("Recent PDFs", self)
-        file_menu.addMenu(recent_menu)
-        self.update_recent_files_menu(recent_menu)
-
+        
         exit_action = QAction("Exit", self)
         exit_action.triggered.connect(self.close)
         file_menu.addAction(exit_action)
@@ -106,11 +102,4 @@ class MainWindow(QMainWindow):
         sine_x = QAction("sin(x)", self)
         sine_x.triggered.connect(lambda: self.game_screen.function_input.setText("math.sin(x / 50)"))
         formula_menu.addAction(sine_x)
-
-    def update_recent_files_menu(self, recent_menu):
-        recent_menu.clear()
-        for file in self.pdf_viewer_screen.recent_files:
-            action = QAction(os.path.basename(file), self)
-            action.setData(file)
-            action.triggered.connect(lambda checked, f=file: self.pdf_viewer_screen.load_file(f))
-            recent_menu.addAction(action)
+    
