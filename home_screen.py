@@ -1,12 +1,21 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QApplication
 from PySide6.QtGui import QIcon, QDrag, QDragEnterEvent, QDropEvent
 from PySide6.QtCore import Qt, QSize, QPoint, QMimeData
+from editor_screen import EditorScreen
+from settings_screen import SettingsScreen
+from graph_war import GraphWarScreen
+from formula_collection import FormulaCollectionScreen
+from pdf_viewer import PDFViewerScreen
+from enthalpy_screen import EnthalpyScreen
+from vector_space_screen import VectorCalculator
 
 class DraggableButton(QPushButton):
     """En knap med drag-and-drop funktionalitet og design, der matcher EditorButton."""
-    def __init__(self, text, parent=None):
+    def __init__(self, text, parent=None, target_screen=None, main_window=None):
         super().__init__(text, parent)
         self.drag_enabled = False
+        self.target_screen = target_screen  # Skærmen, knappen skal åbne
+        self.main_window = main_window      # Reference til MainWindow
         self.setFixedSize(QSize(120, 60))
         self.setStyleSheet("""
             QPushButton {
@@ -60,19 +69,27 @@ class DraggableButton(QPushButton):
             self_pos = self.pos()
             source.move(self_pos)
             self.move(source_pos)
+            # Swap target screens and main_window to maintain functionality after drag-and-drop
+            source.target_screen, self.target_screen = self.target_screen, source.target_screen
+            source.main_window, self.main_window = self.main_window, source.main_window
             e.acceptProposedAction()
 
     def set_drag_enabled(self, enabled):
         self.drag_enabled = enabled
 
     def on_button_pressed(self):
-        print(f"{self.text()} pressed!")
+        """Skift til den tilknyttede skærm, hvis en er defineret."""
+        if self.target_screen and self.main_window:
+            self.main_window.stacked_widget.setCurrentWidget(self.target_screen)
+        else:
+            print(f"{self.text()} pressed! No target screen or main_window assigned.")
 
 class HomeScreen(QWidget):
     """Hjemmeskærm med draggable knapper til Matematik og Kemi i en mørk-tema brugergrænseflade."""
 
-    def __init__(self):
+    def __init__(self, main_window):
         super().__init__()
+        self.main_window = main_window  # Reference til MainWindow for at få adgang til stacked_widget
         self.setStyleSheet("background-color: #1E1E1E;")
         self.layout = QVBoxLayout()
         self.layout.setSpacing(15)
@@ -142,9 +159,14 @@ class HomeScreen(QWidget):
         self.row2_button_layout.setAlignment(Qt.AlignCenter)
         self.row2_inner_layout.addLayout(self.row2_button_layout)
         
-        # Initialize buttons
+        # Initialize buttons with specific screens and main_window
         self.buttons = [
-            DraggableButton(f"Button {i+1}", self) for i in range(6)
+            DraggableButton("Vektorer", self, target_screen=main_window.vector_calculator_screen, main_window=main_window),
+            DraggableButton("Grafkrig", self, target_screen=main_window.game_screen, main_window=main_window),
+            DraggableButton("Formler", self, target_screen=main_window.formulacollection_screen, main_window=main_window),
+            DraggableButton("Entalpi", self, target_screen=main_window.enthalpy_screen, main_window=main_window),
+            DraggableButton("PDF-viser", self, target_screen=main_window.pdf_viewer_screen, main_window=main_window),
+            DraggableButton("Teksteditor", self, target_screen=main_window.editor_screen, main_window=main_window),
         ]
         image_paths = ["image1.png", "image2.png", "image3.png", "image4.png", "image5.png", "image6.png"]
         for i, button in enumerate(self.buttons):

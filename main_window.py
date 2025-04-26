@@ -2,14 +2,8 @@ import os
 from PySide6.QtWidgets import QMainWindow, QStackedWidget, QMenu
 from PySide6.QtGui import QAction
 from PySide6.QtCore import Qt
-from home_screen import HomeScreen
-from editor_screen import EditorScreen
-from settings_screen import SettingsScreen
-from graph_war import GraphWarScreen
-from formula_collection import FormulaCollectionScreen
-from pdf_viewer import PDFViewerScreen
-from enthalpy_screen import EnthalpyScreen
-from vector_space_screen import VectorCalculator
+from home_screen import (HomeScreen, VectorCalculator, EnthalpyScreen, PDFViewerScreen, 
+                         GraphWarScreen, EditorScreen, SettingsScreen, FormulaCollectionScreen)
 
 class MainWindow(QMainWindow):
     """Hovedvindue til at navigere mellem forskellige skærme i en mørk-tema brugergrænseflade."""
@@ -71,7 +65,6 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.stacked_widget)
 
         # Initialize screens
-        self.home_screen = HomeScreen()
         self.editor_screen = EditorScreen()
         self.settings_screen = SettingsScreen()
         self.game_screen = GraphWarScreen()
@@ -79,6 +72,7 @@ class MainWindow(QMainWindow):
         self.formulacollection_screen = FormulaCollectionScreen()
         self.pdf_viewer_screen = PDFViewerScreen()
         self.vector_calculator_screen = VectorCalculator()
+        self.home_screen = HomeScreen(self)  # Send self (MainWindow) til HomeScreen
 
         # Add screens to stacked widget
         self.stacked_widget.addWidget(self.home_screen)
