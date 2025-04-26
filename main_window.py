@@ -4,6 +4,7 @@ from PySide6.QtGui import QAction
 from PySide6.QtCore import Qt
 from home_screen import (HomeScreen, VectorCalculator, EnthalpyScreen, PDFViewerScreen, 
                          GraphWarScreen, EditorScreen, SettingsScreen, FormulaCollectionScreen)
+from triangle_calculator import TriangleCalculator
 
 class MainWindow(QMainWindow):
     """Hovedvindue til at navigere mellem forskellige skærme i en mørk-tema brugergrænseflade."""
@@ -72,6 +73,7 @@ class MainWindow(QMainWindow):
         self.formulacollection_screen = FormulaCollectionScreen()
         self.pdf_viewer_screen = PDFViewerScreen()
         self.vector_calculator_screen = VectorCalculator()
+        self.triangle_calculator_screen = TriangleCalculator()
         self.home_screen = HomeScreen(self)  # Send self (MainWindow) til HomeScreen
 
         # Add screens to stacked widget
@@ -83,6 +85,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.formulacollection_screen)
         self.stacked_widget.addWidget(self.pdf_viewer_screen)
         self.stacked_widget.addWidget(self.vector_calculator_screen)
+        self.stacked_widget.addWidget(self.triangle_calculator_screen)
 
         # Create menu bar
         self.create_menu_bar()
@@ -131,6 +134,10 @@ class MainWindow(QMainWindow):
         vector_action = QAction("Vektorer", self)
         vector_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.vector_calculator_screen))
         math_menu.addAction(vector_action)
+
+        triangle_action = QAction("Trekantsberegner", self)
+        triangle_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.triangle_calculator_screen))
+        math_menu.addAction(triangle_action)
 
         # Chemistry menu
         chemistry_menu = menubar.addMenu("Kemi")

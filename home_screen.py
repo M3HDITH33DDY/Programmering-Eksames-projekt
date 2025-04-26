@@ -8,6 +8,7 @@ from formula_collection import FormulaCollectionScreen
 from pdf_viewer import PDFViewerScreen
 from enthalpy_screen import EnthalpyScreen
 from vector_space_screen import VectorCalculator
+from triangle_calculator import TriangleCalculator
 
 class DraggableButton(QPushButton):
     """En knap med drag-and-drop funktionalitet og design, der matcher EditorButton."""
@@ -166,7 +167,7 @@ class HomeScreen(QWidget):
             DraggableButton("Formler", self, target_screen=main_window.formulacollection_screen, main_window=main_window),
             DraggableButton("Entalpi", self, target_screen=main_window.enthalpy_screen, main_window=main_window),
             DraggableButton("PDF-viser", self, target_screen=main_window.pdf_viewer_screen, main_window=main_window),
-            DraggableButton("Teksteditor", self, target_screen=main_window.editor_screen, main_window=main_window),
+            DraggableButton("Trekantsberegner", self, target_screen=main_window.triangle_calculator_screen, main_window=main_window),
         ]
         image_paths = ["image1.png", "image2.png", "image3.png", "image4.png", "image5.png", "image6.png"]
         for i, button in enumerate(self.buttons):
