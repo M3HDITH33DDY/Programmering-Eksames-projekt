@@ -94,7 +94,7 @@ class VectorCalculator(QWidget):
 
         # Calculation buttons
         button_layout = QHBoxLayout()
-        operations = ["Add", "Subtract", "Dot Product", "Cross Product", "Plane Equation"]
+        operations = ["Add", "Subtract", "Dot Product", "Cross Product", "Plane Equation", "Alt"]
         self.buttons = {}
         for op in operations:
             btn = QPushButton(op)
@@ -120,7 +120,8 @@ class VectorCalculator(QWidget):
         # Get coordinates
         coord1 = self.get_coordinates(self.coord1_inputs)
         coord2 = self.get_coordinates(self.coord2_inputs)
-        coord3 = self.get_coordinates(self.coord3_inputs) if operation == "Plane Equation" else None
+        coord3 = self.get_coordinates(self.coord3_inputs) if operation in ("Plane Equation", "Alt") else None
+
 
         if coord1 is None or coord2 is None or (operation == "Plane Equation" and coord3 is None):
             self.result_display.setText("Error: Please enter valid numbers for coordinates.")
@@ -129,7 +130,12 @@ class VectorCalculator(QWidget):
         # Determine types
         type1 = "Vector" if self.vector1_radio.isChecked() else "Point"
         type2 = "Vector" if self.vector2_radio.isChecked() else "Point"
-        type3 = "Vector" if self.vector3_radio.isChecked() else "Point" if operation == "Plane Equation" else None
+        type3 = (
+                "Vector" if self.vector3_radio.isChecked()
+                else "Point" if operation == "Plane Equation"
+                else "Point" if operation == "Alt"
+                else None
+            )
 
         # Initialize result
         result_text = f"Operation: {operation}\n"
@@ -156,7 +162,22 @@ class VectorCalculator(QWidget):
                 a, b, c, d = VectorOperations.plane_equation(coord1, coord2, coord3, type1, type2, type3)
                 result_text += f"Normalvektor: [{a} {b} {c}]\n"
                 result_text += f"Plane Equation: {a}x + {b}y + {c}z = {d}\n"
-                result_text += f"Plane Equation: {a}x + {b}y + {c}z -{d} = 0\n"
+                result_text += f"Plane Equation: {a}x + {b}y + {c}z {-d} = 0\n"
+            elif operation == "Alt":
+                result = VectorOperations.add(coord1, coord2, type1, type2)
+                result_text += f"Addering af vektor 1 og 2: {result}\n"
+                result = VectorOperations.subtract(coord1, coord2, type1, type2)
+                result_text += f"Substraktion af vektor 1 og 2: {result}\n"
+                result = VectorOperations.dot_product(coord1, coord2, type1, type2)
+                result_text += f"Prikprodukt af vektor 1 og 2: {result}\n"
+                result = VectorOperations.cross_product(coord1, coord2, type1, type2)
+                result_text += f"Noamlvektor af vektor 1 og 2: {result}\n"
+                a, b, c, d = VectorOperations.plane_equation(coord1, coord2, coord3, type1, type2, type3)
+                result_text += f"Normalvektor: [{a} {b} {c}]\n"
+                result_text += f"Plane Equation: {a}x + {b}y + {c}z = {d}\n"
+                result_text += f"Plane Equation: {a}x + {b}y + {c}z {-d} = 0\n"
+
+                
             else:
                 result_text += "Error: Unknown operation."
         except Exception as e:
