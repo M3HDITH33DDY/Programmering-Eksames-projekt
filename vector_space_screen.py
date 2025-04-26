@@ -66,9 +66,35 @@ class VectorCalculator(QWidget):
         group2_layout.addLayout(radio2_layout)
         main_layout.addWidget(self.group2)
 
+        # Coordinate input for third vector/point
+        self.group3 = QGroupBox("Coordinate 3")
+        group3_layout = QVBoxLayout()
+        self.group3.setLayout(group3_layout)
+
+        self.coord3_inputs = []
+        coord3_layout = QHBoxLayout()
+        for label in ['X:', 'Y:', 'Z:']:
+            lbl = QLabel(label)
+            input_field = QLineEdit()
+            input_field.setPlaceholderText("0.0")
+            coord3_layout.addWidget(lbl)
+            coord3_layout.addWidget(input_field)
+            self.coord3_inputs.append(input_field)
+        group3_layout.addLayout(coord3_layout)
+
+        # Radio buttons for vector/point
+        self.vector3_radio = QRadioButton("Vector")
+        self.point3_radio = QRadioButton("Point")
+        self.vector3_radio.setChecked(True)
+        radio3_layout = QHBoxLayout()
+        radio3_layout.addWidget(self.vector3_radio)
+        radio3_layout.addWidget(self.point3_radio)
+        group3_layout.addLayout(radio3_layout)
+        main_layout.addWidget(self.group3)
+
         # Calculation buttons
         button_layout = QHBoxLayout()
-        operations = ["Add", "Subtract", "Dot Product", "Cross Product"]
+        operations = ["Add", "Subtract", "Dot Product", "Cross Product", "Plane Equation"]
         self.buttons = {}
         for op in operations:
             btn = QPushButton(op)
@@ -94,19 +120,23 @@ class VectorCalculator(QWidget):
         # Get coordinates
         coord1 = self.get_coordinates(self.coord1_inputs)
         coord2 = self.get_coordinates(self.coord2_inputs)
+        coord3 = self.get_coordinates(self.coord3_inputs) if operation == "Plane Equation" else None
 
-        if coord1 is None or coord2 is None:
+        if coord1 is None or coord2 is None or (operation == "Plane Equation" and coord3 is None):
             self.result_display.setText("Error: Please enter valid numbers for coordinates.")
             return
 
         # Determine types
         type1 = "Vector" if self.vector1_radio.isChecked() else "Point"
         type2 = "Vector" if self.vector2_radio.isChecked() else "Point"
+        type3 = "Vector" if self.vector3_radio.isChecked() else "Point" if operation == "Plane Equation" else None
 
         # Initialize result
         result_text = f"Operation: {operation}\n"
         result_text += f"Coordinate 1 ({type1}): {coord1}\n"
         result_text += f"Coordinate 2 ({type2}): {coord2}\n"
+        if operation == "Plane Equation":
+            result_text += f"Coordinate 3 ({type3}): {coord3}\n"
 
         # Perform calculations using VectorOperations
         try:
@@ -122,6 +152,11 @@ class VectorCalculator(QWidget):
             elif operation == "Cross Product":
                 result = VectorOperations.cross_product(coord1, coord2, type1, type2)
                 result_text += f"Result: {result}"
+            elif operation == "Plane Equation":
+                a, b, c, d = VectorOperations.plane_equation(coord1, coord2, coord3, type1, type2, type3)
+                result_text += f"Normalvektor: [{a} {b} {c}]\n"
+                result_text += f"Plane Equation: {a}x + {b}y + {c}z = {d}\n"
+                result_text += f"Plane Equation: {a}x + {b}y + {c}z -{d} = 0\n"
             else:
                 result_text += "Error: Unknown operation."
         except Exception as e:
