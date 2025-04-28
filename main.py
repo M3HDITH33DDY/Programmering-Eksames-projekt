@@ -6,15 +6,17 @@ from main_window import MainWindow
 def main():
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
-
-    try:
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
+    """try:
         window = MainWindow()
         window.show()
         sys.exit(app.exec())
     except Exception as e:
         error_msg = traceback.format_exc()
         QMessageBox.critical(None, "Fatal Error", f"An unexpected error occurred:\n{error_msg}")
-        sys.exit(1)
+        sys.exit(1)"""
 
 if __name__ == "__main__":
     main()
