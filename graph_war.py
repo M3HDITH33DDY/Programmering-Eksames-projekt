@@ -32,13 +32,19 @@ class GraphWarScreen(QWidget):
         self.layout = QVBoxLayout()
         self.layout.addStretch() #Mellemrum, rykker objekter ned i bunden
         self.title = QLabel("Graph War - Hit the Enemies with Your Function!")
+        self.scale_text = QLabel("Skalering af banen        ")
         self.title.setAlignment(Qt.AlignCenter)
+        self.scale_text.setAlignment(Qt.AlignRight)
         self.layout.addWidget(self.title)
+        self.layout.addWidget(self.scale_text)
 
         input_layout = QHBoxLayout()
         self.function_input = QLineEdit("x**2 / 100")
+        self.scale_input = QLineEdit("0.01")
+        self.scale_input.setFixedWidth(120)
         input_layout.addWidget(QLabel("Function f(x) ="))
         input_layout.addWidget(self.function_input)
+        input_layout.addWidget(self.scale_input)
         self.layout.addLayout(input_layout)
 
         self.instruction_label = QLabel("Use 'x' as variable (e.g., 'x**2', 'math.sin(x)', 'x/10').")
@@ -74,9 +80,9 @@ class GraphWarScreen(QWidget):
         h = self.height()
 
         # Tegn akser
-        painter.setPen(QPen(Qt.black, 1))
+        painter.setPen(QPen(Qt.white, 1))
         painter.drawLine(20, h // 2, w - 50, h // 2)  # X-akse
-        painter.drawLine(w // 6, 20, w // 6, h - 50)  # Y-akse
+        painter.drawLine(w // 6, 20, w // 6, h - 150)  # Y-akse
 
         # Tegn graf
         if self.graph_points:
@@ -95,7 +101,9 @@ class GraphWarScreen(QWidget):
             function_str = self.function_input.text().strip()
             if not function_str:
                 raise ValueError("Function cannot be empty!")
-
+            self.scale = float(self.scale_input.text().strip())
+            if not self.scale:
+                raise ValueError("Function cannot beddd empty!")
             safe_dict = {"math": math, "x": 0}
             self.graph_points = []
 
@@ -111,8 +119,8 @@ class GraphWarScreen(QWidget):
                 safe_dict["x"] = adjusted_x
                 y = eval(function_str, {"__builtins__": {}}, safe_dict)
 
-                screen_y = h // 2 - int(y*self.scale)
-                screen_y = max(50, min(h - 50, screen_y))  # Hold grafen inde i området
+                screen_y = h // 2 - (y*self.scale)
+                screen_y = max(-10, min(h, screen_y))  # Hold grafen inde i området
                 self.graph_points.append(QPoint(int(x), screen_y))
 
             # Tjek om vi rammer nogle fjender
