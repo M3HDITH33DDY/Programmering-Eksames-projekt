@@ -12,21 +12,22 @@ from triangle_calculator import TriangleCalculator
 
 class DraggableButton(QPushButton):
     """En knap med drag-and-drop funktionalitet og design, der matcher EditorButton."""
-    def __init__(self, text, parent=None, target_screen=None, main_window=None):
-        super().__init__(text, parent)
+    def __init__(self, text, button_id, parent=None, target_screen=None, main_window=None):
+        super().__init__("", parent)  # Tom tekst, da billedet fylder knappen
+        self.button_id = button_id  # Unik identifikator til knappen
         self.drag_enabled = False
-        self.target_screen = target_screen  # Skærmen, knappen skal åbne
-        self.main_window = main_window      # Reference til MainWindow
+        self.target_screen = target_screen
+        self.main_window = main_window
         self.setFixedSize(QSize(120, 60))
         self.setStyleSheet("""
             QPushButton {
                 border-radius: 30px;
                 background-color: #15803D;
                 color: #FFFFFF;
-                padding: 8px;
                 font-size: 14px;
                 font-weight: bold;
                 font-family: Arial, sans-serif;
+                padding: 0px;  /* Fjern padding for at lade billedet fylde */
             }
             QPushButton:hover {
                 background-color: #16A34A;
@@ -36,11 +37,13 @@ class DraggableButton(QPushButton):
             }
         """)
         self.setAcceptDrops(True)
-        self.setIcon(QIcon("picture.png"))
-        self.setIconSize(QSize(32, 32))
-        
-        # Connect the clicked signal to a handler
+        # Sæt ikon og skaler det til at fylde knappen
+        self.setIconSize(QSize(120, 60))  # Matcher knappens størrelse
         self.clicked.connect(self.on_button_pressed)
+
+    def set_icon(self, icon_path):
+        """Sætter ikonet og sikrer, at det fylder knappen."""
+        self.setIcon(QIcon(icon_path))
 
     def mousePressEvent(self, e):
         if e.button() == Qt.LeftButton and self.drag_enabled:
@@ -70,9 +73,10 @@ class DraggableButton(QPushButton):
             self_pos = self.pos()
             source.move(self_pos)
             self.move(source_pos)
-            # Swap target screens and main_window to maintain functionality after drag-and-drop
+            # Swap target screens, main_window og button_id
             source.target_screen, self.target_screen = self.target_screen, source.target_screen
             source.main_window, self.main_window = self.main_window, source.main_window
+            source.button_id, self.button_id = self.button_id, source.button_id
             e.acceptProposedAction()
 
     def set_drag_enabled(self, enabled):
@@ -83,14 +87,14 @@ class DraggableButton(QPushButton):
         if self.target_screen and self.main_window:
             self.main_window.stacked_widget.setCurrentWidget(self.target_screen)
         else:
-            print(f"{self.text()} pressed! No target screen or main_window assigned.")
+            print(f"Button {self.button_id} pressed! No target screen or main_window assigned.")
 
 class HomeScreen(QWidget):
     """Hjemmeskærm med draggable knapper til Matematik og Kemi i en mørk-tema brugergrænseflade."""
 
     def __init__(self, main_window):
         super().__init__()
-        self.main_window = main_window  # Reference til MainWindow for at få adgang til stacked_widget
+        self.main_window = main_window
         self.setStyleSheet("background-color: #1E1E1E;")
         self.layout = QVBoxLayout()
         self.layout.setSpacing(15)
@@ -160,19 +164,19 @@ class HomeScreen(QWidget):
         self.row2_button_layout.setAlignment(Qt.AlignCenter)
         self.row2_inner_layout.addLayout(self.row2_button_layout)
         
-        # Initialize buttons with specific screens and main_window
+        # Initialize buttons with specific screens, main_window, and button IDs
         self.buttons = [
-            DraggableButton("Vektorer", self, target_screen=main_window.vector_calculator_screen, main_window=main_window),
-            DraggableButton("Grafkrig", self, target_screen=main_window.game_screen, main_window=main_window),
-            DraggableButton("Formler", self, target_screen=main_window.formulacollection_screen, main_window=main_window),
-            DraggableButton("Entalpi", self, target_screen=main_window.enthalpy_screen, main_window=main_window),
-            DraggableButton("PDF-viser", self, target_screen=main_window.pdf_viewer_screen, main_window=main_window),
-            DraggableButton("Trekantsberegner", self, target_screen=main_window.triangle_calculator_screen, main_window=main_window),
+            DraggableButton("Vektorer", "button1", self, target_screen=main_window.vector_calculator_screen, main_window=main_window),
+            DraggableButton("Grafkrig", "button2", self, target_screen=main_window.game_screen, main_window=main_window),
+            DraggableButton("Formler", "button3", self, target_screen=main_window.formulacollection_screen, main_window=main_window),
+            DraggableButton("Entalpi", "button4", self, target_screen=main_window.enthalpy_screen, main_window=main_window),
+            DraggableButton("PDF-viser", "button5", self, target_screen=main_window.pdf_viewer_screen, main_window=main_window),
+            DraggableButton("Trekantsberegner", "button6", self, target_screen=main_window.triangle_calculator_screen, main_window=main_window),
         ]
         image_paths = ["image1.png", "image2.png", "image3.png", "image4.png", "image5.png", "image6.png"]
         for i, button in enumerate(self.buttons):
-            button.setIcon(QIcon(image_paths[i]))
-            button.set_drag_enabled(True)  # Enable drag-and-drop by default
+            button.set_icon(image_paths[i])  # Sæt ikon med ny metode
+            button.set_drag_enabled(True)
         
         # Add buttons to layouts
         for i in range(3):
