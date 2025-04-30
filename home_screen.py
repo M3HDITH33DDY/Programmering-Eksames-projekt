@@ -43,7 +43,7 @@ class DraggableButton(QPushButton):
         pixmap = QPixmap(icon_path)
         if pixmap.isNull():
             print(f"Fejl: Kunne ikke indlæse billede {icon_path}. Bruger standardstørrelse.")
-            self.setFixedSize(QSize(120, 60))
+            self.setFixedSize(QSize(100, 100))
             self.setIconSize(QSize(120, 60))
             self.setIcon(QIcon(icon_path))  # Forsøg alligevel at sætte ikonet
             return
