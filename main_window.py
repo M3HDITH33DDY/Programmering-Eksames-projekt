@@ -74,7 +74,7 @@ class MainWindow(QMainWindow):
         self.pdf_viewer_screen = PDFViewerScreen()
         self.vector_calculator_screen = VectorCalculator()
         self.triangle_calculator_screen = TriangleCalculator()
-        self.home_screen = HomeScreen(self)  # Send self (MainWindow) til HomeScreen
+        self.home_screen = HomeScreen(self)  
 
         # Add screens to stacked widget
         self.stacked_widget.addWidget(self.home_screen)
@@ -146,7 +146,7 @@ class MainWindow(QMainWindow):
         chemistry_menu.addAction(enthalpy_screen_action)
 
         # Formula menu for GraphWarScreen
-        formula_menu = menubar.addMenu("Formler")
+        """formula_menu = menubar.addMenu("Formler")
         x_squared = QAction("x²", self)
         x_squared.triggered.connect(lambda: self.game_screen.function_input.setText("x**2 / 100"))
         formula_menu.addAction(x_squared)
@@ -161,4 +161,4 @@ class MainWindow(QMainWindow):
 
         sine_x = QAction("sin(x)", self)
         sine_x.triggered.connect(lambda: self.game_screen.function_input.setText("math.sin(x / 50)"))
-        formula_menu.addAction(sine_x)
+        formula_menu.addAction(sine_x)"""
