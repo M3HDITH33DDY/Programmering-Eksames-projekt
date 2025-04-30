@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QApplication
-from PySide6.QtGui import QIcon, QDrag, QDragEnterEvent, QDropEvent
-from PySide6.QtCore import Qt, QSize, QPoint, QMimeData
+from PySide6.QtGui import QIcon, QDrag, QDragEnterEvent, QDropEvent, QPixmap, QPainter, QPainterPath
+from PySide6.QtCore import Qt, QSize, QPoint, QMimeData, QRectF
 from editor_screen import EditorScreen
 from settings_screen import SettingsScreen
 from graph_war import GraphWarScreen
@@ -18,7 +18,6 @@ class DraggableButton(QPushButton):
         self.drag_enabled = False
         self.target_screen = target_screen
         self.main_window = main_window
-        self.setFixedSize(QSize(120, 60))
         self.setStyleSheet("""
             QPushButton {
                 border-radius: 30px;
@@ -37,13 +36,60 @@ class DraggableButton(QPushButton):
             }
         """)
         self.setAcceptDrops(True)
-        # Sæt ikon og skaler det til at fylde knappen
-        self.setIconSize(QSize(120, 60))  # Matcher knappens størrelse
         self.clicked.connect(self.on_button_pressed)
 
     def set_icon(self, icon_path):
-        """Sætter ikonet og sikrer, at det fylder knappen."""
-        self.setIcon(QIcon(icon_path))
+        """Sætter ikonet, tilpasser knappens størrelse til billedet og afrunder hjørnerne."""
+        pixmap = QPixmap(icon_path)
+        if pixmap.isNull():
+            print(f"Fejl: Kunne ikke indlæse billede {icon_path}. Bruger standardstørrelse.")
+            self.setFixedSize(QSize(120, 60))
+            self.setIconSize(QSize(120, 60))
+            self.setIcon(QIcon(icon_path))  # Forsøg alligevel at sætte ikonet
+            return
+
+        # Hent billedets dimensioner
+        img_width, img_height = pixmap.width(), pixmap.height()
+        
+        # Maksimal størrelse for knappen
+        max_width, max_height = 150, 100
+        
+        # Bevar billedets aspektforhold og begræns til max størrelse
+        aspect_ratio = img_width / img_height
+        if img_width > max_width or img_height > max_height:
+            if aspect_ratio > max_width / max_height:
+                # Begræns efter bredde
+                img_width = max_width
+                img_height = int(img_width / aspect_ratio)
+            else:
+                # Begræns efter højde
+                img_height = max_height
+                img_width = int(img_height * aspect_ratio)
+        
+        # Skaler pixmap til den beregnede størrelse
+        pixmap = pixmap.scaled(img_width, img_height, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        
+        # Opret en ny pixmap med afrundede hjørner
+        rounded_pixmap = QPixmap(img_width, img_height)
+        rounded_pixmap.fill(Qt.transparent)  # Gennemsigtig baggrund
+        
+        painter = QPainter(rounded_pixmap)
+        painter.setRenderHint(QPainter.Antialiasing)
+        
+        # Opret en afrundet rektangelsti
+        path = QPainterPath()
+        radius = 30  # Matcher buttonens border-radius
+        path.addRoundedRect(QRectF(0, 0, img_width, img_height), radius, radius)
+        
+        # Klip til den afrundede sti
+        painter.setClipPath(path)
+        painter.drawPixmap(0, 0, pixmap)
+        painter.end()
+        
+        # Sæt knappens størrelse og ikon
+        self.setFixedSize(QSize(img_width, img_height))
+        self.setIconSize(QSize(img_width, img_height))
+        self.setIcon(QIcon(rounded_pixmap))
 
     def mousePressEvent(self, e):
         if e.button() == Qt.LeftButton and self.drag_enabled:
