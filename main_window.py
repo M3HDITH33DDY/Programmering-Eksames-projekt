@@ -58,7 +58,7 @@ class MainWindow(QMainWindow):
             }
         """)
         self.setWindowTitle("Multi Program")
-        self.setGeometry(100, 100, 1200, 800)
+        self.setGeometry(100, 100, 1200, 600)
 
         # Central widget with stacked screens
         self.stacked_widget = QStackedWidget()

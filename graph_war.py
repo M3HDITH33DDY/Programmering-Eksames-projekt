@@ -27,9 +27,10 @@ class Enemy:
 class GraphWarScreen(QWidget):
     def __init__(self):
         super().__init__()
-
+        
         # Layout
         self.layout = QVBoxLayout()
+        self.layout.addStretch() #Mellemrum, rykker objekter ned i bunden
         self.title = QLabel("Graph War - Hit the Enemies with Your Function!")
         self.title.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(self.title)
@@ -52,7 +53,7 @@ class GraphWarScreen(QWidget):
         self.result_label.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(self.result_label)
 
-        self.layout.addStretch()
+        
         self.setLayout(self.layout)
 
         self.scale = 1
