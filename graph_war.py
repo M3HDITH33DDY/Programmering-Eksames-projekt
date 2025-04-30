@@ -9,9 +9,19 @@ from PySide6.QtCore import Qt, QPoint
 class Enemy:
     def __init__(self, width, height):
         self.state = True  # Levende
-        self.size = 10
+        self.size = 10 #Størrelse (Diameter)
         self.x = random.randint(width - 60, width - 20)
         self.y = random.randint(150, height - 100)
+
+        # Gem relativ position
+        self.x_ratio = self.x / width
+        self.y_ratio = self.y / height
+    
+    def update_position(self, new_width, new_height):
+        self.x = int(self.x_ratio * new_width)
+        self.y = int(self.y_ratio * new_height)
+    
+
 
 
 class GraphWarScreen(QWidget):
@@ -44,6 +54,8 @@ class GraphWarScreen(QWidget):
 
         self.layout.addStretch()
         self.setLayout(self.layout)
+
+        self.scale = 1
 
         # Spiltilstand
         self.graph_points = []
@@ -98,7 +110,7 @@ class GraphWarScreen(QWidget):
                 safe_dict["x"] = adjusted_x
                 y = eval(function_str, {"__builtins__": {}}, safe_dict)
 
-                screen_y = h // 2 - int(y)
+                screen_y = h // 2 - int(y*self.scale)
                 screen_y = max(50, min(h - 50, screen_y))  # Hold grafen inde i området
                 self.graph_points.append(QPoint(int(x), screen_y))
 
@@ -122,7 +134,20 @@ class GraphWarScreen(QWidget):
                 self.result_label.setText("Missed! Try again.")
 
             self.update()
-
+    
         except Exception as e:
             self.result_label.setText(f"Error: {str(e)}")
+    
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        new_width = self.width()
+        new_height = self.height()
+        for enemy in self.enemies:
+            enemy.update_position(new_width, new_height)
+        self.update()
+
+
+   
+    
+
 
