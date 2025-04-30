@@ -10,8 +10,8 @@ class Enemy:
     def __init__(self, width, height):
         self.state = True  # Levende
         self.size = 10 #Størrelse (Diameter)
-        self.x = random.randint(width - 60, width - 20)
-        self.y = random.randint(150, height - 100)
+        self.x = random.randint(width - 85, width - 55)
+        self.y = random.randint(50, height - 150)
 
         # Gem relativ position
         self.x_ratio = self.x / width
@@ -99,8 +99,8 @@ class GraphWarScreen(QWidget):
             safe_dict = {"math": math, "x": 0}
             self.graph_points = []
 
-            w = self.width()
-            h = self.height()
+            w = self.width() #Nuværende bredde af skærmen
+            h = self.height() #Nuværende højde af skærmen
 
             x_start = 50
             x_end = w - 50
@@ -146,6 +146,16 @@ class GraphWarScreen(QWidget):
         for enemy in self.enemies:
             enemy.update_position(new_width, new_height)
         self.update()
+
+    def reset_game(self):
+        self.spawn_enemies()
+        self.result_label.setText("Try to destroy all enemies!")
+        self.graph_points = []
+        self.update()
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
+            self.reset_game()
 
 
    
