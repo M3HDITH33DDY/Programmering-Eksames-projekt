@@ -11,7 +11,7 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        # Set dark theme stylesheet for main window and menu bar
+        # mørk tema for menubar
         self.setStyleSheet("""
             QMainWindow {
                 background-color: #1E1E1E;
@@ -60,41 +60,39 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Multi Program")
         self.setGeometry(100, 100, 1200, 600)
 
-        # Central widget with stacked screens
+        # Central wiget
         self.stacked_widget = QStackedWidget()
         self.stacked_widget.setStyleSheet("background-color: #1E1E1E;")
         self.setCentralWidget(self.stacked_widget)
 
-        # Initialize screens
+        # Initialisering af skærme
         self.editor_screen = EditorScreen()
         self.settings_screen = SettingsScreen()
         self.game_screen = GraphWarScreen()
         self.enthalpy_screen = EnthalpyScreen()
-        self.formulacollection_screen = FormulaCollectionScreen()
         self.pdf_viewer_screen = PDFViewerScreen()
         self.vector_calculator_screen = VectorCalculator()
         self.triangle_calculator_screen = TriangleCalculator()
         self.home_screen = HomeScreen(self)  
 
-        # Add screens to stacked widget
+        # Tilføj skærme til knapperne
         self.stacked_widget.addWidget(self.home_screen)
         self.stacked_widget.addWidget(self.editor_screen)
         self.stacked_widget.addWidget(self.settings_screen)
         self.stacked_widget.addWidget(self.enthalpy_screen)
         self.stacked_widget.addWidget(self.game_screen)
-        self.stacked_widget.addWidget(self.formulacollection_screen)
         self.stacked_widget.addWidget(self.pdf_viewer_screen)
         self.stacked_widget.addWidget(self.vector_calculator_screen)
         self.stacked_widget.addWidget(self.triangle_calculator_screen)
 
-        # Create menu bar
+        # Fremstilling af menubar
         self.create_menu_bar()
 
     def create_menu_bar(self):
         """Opretter menubjælken med navigationsmuligheder til forskellige skærme."""
         menubar = self.menuBar()
 
-        # File menu
+        # Fil menu
         file_menu = menubar.addMenu("Fil")
 
         home_action = QAction("Hjem", self)
@@ -145,20 +143,4 @@ class MainWindow(QMainWindow):
         enthalpy_screen_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.enthalpy_screen))
         chemistry_menu.addAction(enthalpy_screen_action)
 
-        # Formula menu for GraphWarScreen
-        """formula_menu = menubar.addMenu("Formler")
-        x_squared = QAction("x²", self)
-        x_squared.triggered.connect(lambda: self.game_screen.function_input.setText("x**2 / 100"))
-        formula_menu.addAction(x_squared)
-
-        x_cubed = QAction("x³", self)
-        x_cubed.triggered.connect(lambda: self.game_screen.function_input.setText("x**3 / 1000"))
-        formula_menu.addAction(x_cubed)
-
-        x_to_four = QAction("x⁴", self)
-        x_to_four.triggered.connect(lambda: self.game_screen.function_input.setText("x**4 / 10000"))
-        formula_menu.addAction(x_to_four)
-
-        sine_x = QAction("sin(x)", self)
-        sine_x.triggered.connect(lambda: self.game_screen.function_input.setText("math.sin(x / 50)"))
-        formula_menu.addAction(sine_x)"""
+        
