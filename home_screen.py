@@ -15,7 +15,7 @@ class DraggableButton(QPushButton):
     def __init__(self, text, button_id, parent=None, target_screen=None, main_window=None):
         super().__init__("", parent)  # Tom tekst, da billedet fylder knappen
         self.button_id = button_id  # Unik identifikator til knappen
-        self.drag_enabled = False
+        self.drag_enabled = True
         self.target_screen = target_screen
         self.main_window = main_window
         self.setStyleSheet("""
@@ -214,7 +214,7 @@ class HomeScreen(QWidget):
         self.buttons = [
             DraggableButton("Vektorer", "button1", self, target_screen=main_window.vector_calculator_screen, main_window=main_window),
             DraggableButton("Grafkrig", "button2", self, target_screen=main_window.game_screen, main_window=main_window),
-            DraggableButton("Formler", "button3", self, target_screen=main_window.triangle_calculator_screen, main_window=main_window),
+            DraggableButton("Formler", "button3", self, target_screen=main_window.formulacollection_screen, main_window=main_window),
             DraggableButton("Entalpi", "button4", self, target_screen=main_window.enthalpy_screen, main_window=main_window),
             DraggableButton("PDF-viser", "button5", self, target_screen=main_window.pdf_viewer_screen, main_window=main_window),
             DraggableButton("Trekantsberegner", "button6", self, target_screen=main_window.triangle_calculator_screen, main_window=main_window),
@@ -224,7 +224,7 @@ class HomeScreen(QWidget):
             button.set_icon(image_paths[i])  # Sæt ikon med ny metode
             button.set_drag_enabled(True)
         
-        # Add buttons to layouts
+        # Tilføje knapper til layoutet
         for i in range(3):
             self.row1_button_layout.addWidget(self.buttons[i])
         for i in range(3, 6):
