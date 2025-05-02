@@ -8,52 +8,52 @@ class VectorOperations:
             coords.append(coord3)
         for coord in coords:
             if not isinstance(coord, np.ndarray):
-                raise ValueError("Coordinates must be numpy arrays.")
+                raise ValueError("Koordinater skal være et nparray")
             if coord.shape != (3,):
-                raise ValueError("Coordinates must be 3D.")
+                raise ValueError("Alle 3 koordinater skal udfyldes")
 
     @staticmethod
     def add(coord1, coord2, type1, type2):
         VectorOperations.validate_coordinates(coord1, coord2)
         if type1 == "Point" and type2 == "Point":
-            raise ValueError("Addition not allowed between two points.")
+            raise ValueError("Addition kan ikke foretages mellem to punkter")
         return coord1 + coord2
 
     @staticmethod
     def subtract(coord1, coord2, type1, type2):
         VectorOperations.validate_coordinates(coord1, coord2)
         if type1 == "Point" and type2 == "Vector":
-            raise ValueError("Cannot subtract vector from point.")
+            raise ValueError("Kan ikke fratrække punkt fra vektor")
         return coord1 - coord2
 
     @staticmethod
     def dot_product(coord1, coord2, type1, type2):
         VectorOperations.validate_coordinates(coord1, coord2)
         if type1 == "Point" or type2 == "Point":
-            raise ValueError("Dot product requires two vectors.")
+            raise ValueError("Skalar produkt kræver to vektorer")
         return np.dot(coord1, coord2)
 
     @staticmethod
     def cross_product(coord1, coord2, type1, type2):
         VectorOperations.validate_coordinates(coord1, coord2)
         if type1 == "Point" or type2 == "Point":
-            raise ValueError("Cross product requires two vectors.")
+            raise ValueError("Kryds produkt kræver to vektorer")
         return np.cross(coord1, coord2)
 
     @staticmethod
     def plane_equation(coord1, coord2, coord3, type1, type2, type3):
         VectorOperations.validate_coordinates(coord1, coord2, coord3)
         
-        # Initialize normal vector
+        # Initialisering af normalvektor
         normal = None
         
-        # Case 1: Three points
+        # Udkast 1: 3 punkter
         if type1 == "Point" and type2 == "Point" and type3 == "Point":
             vec1 = coord2 - coord1
             vec2 = coord3 - coord1
             normal = np.cross(vec1, vec2)
             point = coord1
-        # Case 2: One point and two vectors
+        # Udkast 2: 1 punkt og 2 vektorer
         elif type1 == "Point" and type2 == "Vector" and type3 == "Vector":
             normal = np.cross(coord2, coord3)
             point = coord1
@@ -64,13 +64,13 @@ class VectorOperations:
             normal = np.cross(coord1, coord2)
             point = coord3
         else:
-            raise ValueError("Plane equation requires three points or one point and two vectors.")
+            raise ValueError("Planens ligning kræver 3 vektorer eller 2 vektorer og 1 punkt")
 
-        # Check if normal is zero (collinear points/vectors)
+        # Tjekker om normalvektoren er lig 0
         if np.allclose(normal, 0):
-            raise ValueError("Points are collinear or vectors are parallel, cannot define a plane.")
+            raise ValueError("Vektorer er parallele eller rammer hinanden, planens ligning kan ikke fremstilles")
 
-        # Plane equation: ax + by + cz = d, where normal = [a, b, c]
+        # Planens ligning
         a, b, c = normal
         d = np.dot(normal, point)
         
