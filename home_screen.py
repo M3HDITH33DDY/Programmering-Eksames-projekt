@@ -210,7 +210,7 @@ class HomeScreen(QWidget):
         self.row2_button_layout.setAlignment(Qt.AlignCenter)
         self.row2_inner_layout.addLayout(self.row2_button_layout)
         
-        # Initialize buttons with specific screens, main_window, and button IDs
+        # initiliser knapper med specifikke skærme, main vindue og knap id
         self.buttons = [
             DraggableButton("Vektorer", "button1", self, target_screen=main_window.vector_calculator_screen, main_window=main_window),
             DraggableButton("Grafkrig", "button2", self, target_screen=main_window.game_screen, main_window=main_window),
