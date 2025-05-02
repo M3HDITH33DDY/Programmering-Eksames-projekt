@@ -32,8 +32,6 @@ class PDFFileSystemModel(QStandardItemModel):
             dir_item.setData(dir_info.filePath(), Qt.UserRole)
             dir_item.setIcon(QIcon.fromTheme("folder"))
             parent_item.appendRow(dir_item)
-            placeholder = QStandardItem("Loading...")
-            dir_item.appendRow(placeholder)
         pdf_files = directory.entryInfoList(["*.pdf"], QDir.Filter.Files, QDir.SortFlag.Name)
         for file_info in pdf_files:
             file_item = QStandardItem(file_info.fileName())
