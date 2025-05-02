@@ -1,13 +1,13 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QApplication
 from PySide6.QtGui import QIcon, QDrag, QDragEnterEvent, QDropEvent, QPixmap, QPainter, QPainterPath
 from PySide6.QtCore import Qt, QSize, QPoint, QMimeData, QRectF
-from editor_screen import EditorScreen
-from settings_screen import SettingsScreen
-from graph_war import GraphWarScreen
-from pdf_viewer import PDFViewerScreen
-from enthalpy_screen import EnthalpyScreen
-from vector_space_screen import VectorCalculator
-from triangle_calculator import TriangleCalculator
+from screens.editor_screen import EditorScreen
+from screens.settings_screen import SettingsScreen
+from screens.graph_war import GraphWarScreen
+from screens.pdf_viewer import PDFViewerScreen
+from screens.enthalpy_screen import EnthalpyScreen
+from screens.vector_space_screen import VectorCalculator
+from screens.triangle_calculator import TriangleCalculator
 
 class DraggableButton(QPushButton):
     """En knap med drag-and-drop funktionalitet og design, der matcher EditorButton."""
@@ -218,7 +218,12 @@ class HomeScreen(QWidget):
             DraggableButton("PDF-viser", "button5", self, target_screen=main_window.pdf_viewer_screen, main_window=main_window),
             DraggableButton("Trekantsberegner", "button6", self, target_screen=main_window.triangle_calculator_screen, main_window=main_window),
         ]
-        image_paths = ["image1.png", "image2.png", "image3.png", "image4.png", "image5.png", "image6.png"]
+        image_paths = ["images/image1.png", 
+                       "images/image2.png", 
+                       "images/image3.png", 
+                       "images/image4.png", 
+                       "images/image5.png", 
+                       "images/image6.png"]
         for i, button in enumerate(self.buttons):
             button.set_icon(image_paths[i])  # Sæt ikon med ny metode
             button.set_drag_enabled(True)
