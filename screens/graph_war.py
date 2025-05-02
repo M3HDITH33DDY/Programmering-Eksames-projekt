@@ -190,8 +190,3 @@ class GraphWarScreen(QWidget):
         if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
             self.reset_game()
 
-
-   
-    
-
-
