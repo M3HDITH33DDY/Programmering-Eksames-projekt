@@ -18,5 +18,9 @@
     {
         "compound": "CH4",
         "delta_h_f": -74.8
+    },
+    {
+        "compound": "N2",
+        "delta_h_f": 0.0
     }
 ]
