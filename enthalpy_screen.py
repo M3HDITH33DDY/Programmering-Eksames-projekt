@@ -33,26 +33,25 @@ class EnthalpyScreen(QWidget):
 
     def __init__(self):
         super().__init__()
-        # Set HomeScreen-inspired dark mode stylesheet
         self.setStyleSheet("background-color: #1E1E1E;")
 
-        # Load JSON file
+        # Loader JSON file
         self.json_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "enthalpy_data.json")
         self.data = self.load_data()
 
-        # Main layout with HomeScreen margins and spacing
+        #main vindue layout med homescreen margin og spacing
         layout = QVBoxLayout()
         layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(20)
 
-        # Table container with gradient label
+        #tabel kontainer med gradient label
         table_container = QWidget()
         table_container.setStyleSheet("background-color: #2D2D2D; border-radius: 10px;")
         table_inner_layout = QVBoxLayout(table_container)
         table_inner_layout.setSpacing(10)
         table_inner_layout.setContentsMargins(10, 10, 10, 10)
 
-        # Gradient title label for table
+        # gradient titel for label
         table_label = QLabel("Entalpi Data")
         table_label.setAlignment(Qt.AlignCenter)
         table_label.setStyleSheet("""
@@ -67,7 +66,7 @@ class EnthalpyScreen(QWidget):
         """)
         table_inner_layout.addWidget(table_label)
 
-        # Table for molecule and ΔH_f° values
+        #tabel for molekyle og and ΔH_f° værdier
         self.table = QTableWidget()
         self.table.setColumnCount(2)
         self.table.setHorizontalHeaderLabels(["Molekyle", "ΔHf° (kJ/mol)"])
@@ -117,7 +116,7 @@ class EnthalpyScreen(QWidget):
         """)
         input_inner_layout.addWidget(input_label)
 
-        # Reaction input and calculate button
+        # Raktion input og knap
         reaction_layout = QHBoxLayout()
         self.reaction_input = QLineEdit()
         self.reaction_input.setPlaceholderText("Indsæt reaktion (f.eks., 2H2 + O2 -> 2H2O)")
@@ -139,7 +138,7 @@ class EnthalpyScreen(QWidget):
         reaction_layout.addWidget(calculate_button)
         input_inner_layout.addLayout(reaction_layout)
 
-        # Result label
+        # label for resultat
         self.result_label = QLabel("Indsæt reaktion for at beregne ΔH°")
         self.result_label.setAlignment(Qt.AlignCenter)
         self.result_label.setStyleSheet("""
@@ -150,7 +149,7 @@ class EnthalpyScreen(QWidget):
         """)
         input_inner_layout.addWidget(self.result_label)
 
-        # Add compound input and button
+        # tilføjer kemikalie og knap
         add_layout = QHBoxLayout()
         self.compound_input = QLineEdit()
         self.compound_input.setPlaceholderText("Nyt molekyle (f.eks., CO2)")
