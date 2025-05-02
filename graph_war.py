@@ -8,18 +8,43 @@ from PySide6.QtCore import Qt, QPoint
 
 class Enemy:
     def __init__(self, width, height):
-        self.state = True  # Levende
-        self.size = 10 #Størrelse (Diameter)
-        self.x = random.randint(width - 85, width - 55)
-        self.y = random.randint(50, height - 150)
+        
+        self._state = True  # Levende
+        self._size = 10  # Diameter
+        self._x = random.randint(width - 85, width - 55)
+        self._y = random.randint(50, height - 150)
 
         # Gem relativ position
-        self.x_ratio = self.x / width
-        self.y_ratio = self.y / height
-    
+        self._x_ratio = self._x / width
+        self._y_ratio = self._y / height
+
+    # ---- Properties ----
+    @property
+    def state(self):
+        return self._state
+
+    @state.setter
+    def state(self, value):
+        if not isinstance(value, bool):
+            raise ValueError("state skal være True eller False")
+        self._state = value
+
+    @property
+    def size(self):
+        return self._size
+
+    @property
+    def x(self):
+        return self._x
+
+    @property
+    def y(self):
+        return self._y
+
     def update_position(self, new_width, new_height):
-        self.x = int(self.x_ratio * new_width)
-        self.y = int(self.y_ratio * new_height)
+        self._x = int(self._x_ratio * new_width)
+        self._y = int(self._y_ratio * new_height)
+
     
 
 
@@ -31,7 +56,7 @@ class GraphWarScreen(QWidget):
         # Layout
         self.layout = QVBoxLayout()
         self.layout.addStretch() #Mellemrum, rykker objekter ned i bunden
-        self.title = QLabel("Graph War - Hit the Enemies with Your Function!")
+        self.title = QLabel("Graf Krig")
         self.scale_text = QLabel("Skalering af banen        ")
         self.title.setAlignment(Qt.AlignCenter)
         self.scale_text.setAlignment(Qt.AlignRight)
@@ -42,20 +67,20 @@ class GraphWarScreen(QWidget):
         self.function_input = QLineEdit("x**2 / 100")
         self.scale_input = QLineEdit("0.01")
         self.scale_input.setFixedWidth(120)
-        input_layout.addWidget(QLabel("Function f(x) ="))
+        input_layout.addWidget(QLabel("Funktion f(x) ="))
         input_layout.addWidget(self.function_input)
         input_layout.addWidget(self.scale_input)
         self.layout.addLayout(input_layout)
 
-        self.instruction_label = QLabel("Use 'x' as variable (e.g., 'x**2', 'math.sin(x)', 'x/10').")
+        self.instruction_label = QLabel("Brug 'x' som den variable (Anvend 'x**2' fremfor 'x^2', 'math.sin(x)', 'x/10').")
         self.instruction_label.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(self.instruction_label)
 
-        self.fire_button = QPushButton("Fire!")
+        self.fire_button = QPushButton("Skyd")
         self.fire_button.clicked.connect(self.update_graph)
         self.layout.addWidget(self.fire_button)
 
-        self.result_label = QLabel("Try to destroy all enemies!")
+        self.result_label = QLabel("Ram alle modstandere")
         self.result_label.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(self.result_label)
 
@@ -100,10 +125,10 @@ class GraphWarScreen(QWidget):
         try:
             function_str = self.function_input.text().strip()
             if not function_str:
-                raise ValueError("Function cannot be empty!")
+                raise ValueError("Funktionen må ikke være blank")
             self.scale = float(self.scale_input.text().strip())
             if not self.scale:
-                raise ValueError("Function cannot beddd empty!")
+                raise ValueError("Funktionens skalering kan ikke være tom")
             safe_dict = {"math": math, "x": 0}
             self.graph_points = []
 
@@ -136,16 +161,16 @@ class GraphWarScreen(QWidget):
 
             # Opdater besked
             if all(not enemy.state for enemy in self.enemies):
-                self.result_label.setText("All enemies destroyed! You win!")
+                self.result_label.setText("Alle modstandere ramt, tryk enter for ny runde")
             elif hit_any:
-                self.result_label.setText("Enemy hit!")
+                self.result_label.setText("Fjende ramt")
             else:
-                self.result_label.setText("Missed! Try again.")
+                self.result_label.setText("Ingen fjende ramt")
 
             self.update()
     
         except Exception as e:
-            self.result_label.setText(f"Error: {str(e)}")
+            self.result_label.setText(f"Fejl: {str(e)}")
     
     def resizeEvent(self, event):
         super().resizeEvent(event)
@@ -157,7 +182,7 @@ class GraphWarScreen(QWidget):
 
     def reset_game(self):
         self.spawn_enemies()
-        self.result_label.setText("Try to destroy all enemies!")
+        self.result_label.setText("Prøv at ramme alle fjender")
         self.graph_points = []
         self.update()
 
