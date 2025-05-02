@@ -4,7 +4,6 @@ from PySide6.QtCore import Qt, QSize, QPoint, QMimeData, QRectF
 from editor_screen import EditorScreen
 from settings_screen import SettingsScreen
 from graph_war import GraphWarScreen
-from formula_collection import FormulaCollectionScreen
 from pdf_viewer import PDFViewerScreen
 from enthalpy_screen import EnthalpyScreen
 from vector_space_screen import VectorCalculator
