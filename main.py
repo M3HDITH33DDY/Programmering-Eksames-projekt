@@ -9,6 +9,7 @@ def main():
     window = MainWindow()
     window.show()
     sys.exit(app.exec())
+    #Fejl ved opstart, til exe, ikke under udvikling
     """try:
         window = MainWindow()
         window.show()
