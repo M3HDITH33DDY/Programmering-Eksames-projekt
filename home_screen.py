@@ -43,7 +43,7 @@ class DraggableButton(QPushButton):
         pixmap = QPixmap(icon_path)
         if pixmap.isNull():
             print(f"Fejl: Kunne ikke indlæse billede {icon_path}. Bruger standardstørrelse.")
-            self.setFixedSize(QSize(120, 60))
+            self.setFixedSize(QSize(100, 100))
             self.setIconSize(QSize(120, 60))
             self.setIcon(QIcon(icon_path))  # Forsøg alligevel at sætte ikonet
             return
@@ -214,7 +214,7 @@ class HomeScreen(QWidget):
         self.buttons = [
             DraggableButton("Vektorer", "button1", self, target_screen=main_window.vector_calculator_screen, main_window=main_window),
             DraggableButton("Grafkrig", "button2", self, target_screen=main_window.game_screen, main_window=main_window),
-            DraggableButton("Formler", "button3", self, target_screen=main_window.formulacollection_screen, main_window=main_window),
+            DraggableButton("Formler", "button3", self, target_screen=main_window.triangle_calculator_screen, main_window=main_window),
             DraggableButton("Entalpi", "button4", self, target_screen=main_window.enthalpy_screen, main_window=main_window),
             DraggableButton("PDF-viser", "button5", self, target_screen=main_window.pdf_viewer_screen, main_window=main_window),
             DraggableButton("Trekantsberegner", "button6", self, target_screen=main_window.triangle_calculator_screen, main_window=main_window),

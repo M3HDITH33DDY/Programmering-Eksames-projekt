@@ -6,6 +6,51 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt
 from vector_calculations import VectorOperations
 
+class CoordinateInput(QWidget):
+    """A reusable widget for coordinate input with vector/point selection."""
+    def __init__(self, title):
+        super().__init__()
+        self.group = QGroupBox(title)
+        layout = QVBoxLayout()
+        self.group.setLayout(layout)
+
+        # Coordinate input fields
+        self.inputs = []
+        coord_layout = QHBoxLayout()
+        for label in ['X:', 'Y:', 'Z:']:
+            lbl = QLabel(label)
+            input_field = QLineEdit()
+            input_field.setPlaceholderText("0.0")
+            coord_layout.addWidget(lbl)
+            coord_layout.addWidget(input_field)
+            self.inputs.append(input_field)
+        layout.addLayout(coord_layout)
+
+        # Radio buttons for vector/point
+        self.vector_radio = QRadioButton("Vector")
+        self.point_radio = QRadioButton("Point")
+        self.vector_radio.setChecked(True)
+        radio_layout = QHBoxLayout()
+        radio_layout.addWidget(self.vector_radio)
+        radio_layout.addWidget(self.point_radio)
+        layout.addLayout(radio_layout)
+
+    def get_widget(self):
+        """Return the QGroupBox widget for adding to a layout."""
+        return self.group
+
+    def get_coordinates(self):
+        """Retrieve coordinates as a numpy array or None if invalid."""
+        try:
+            coords = [float(inp.text()) if inp.text().strip() else 0.0 for inp in self.inputs]
+            return np.array(coords)
+        except ValueError:
+            return None
+
+    def get_type(self):
+        """Return the selected type ('Vector' or 'Point')."""
+        return "Vector" if self.vector_radio.isChecked() else "Point"
+
 class VectorCalculator(QWidget):
     def __init__(self):
         super().__init__()
@@ -14,87 +59,18 @@ class VectorCalculator(QWidget):
         main_layout = QVBoxLayout()
         self.setLayout(main_layout)
 
-        # Coordinate input for first vector/point
-        self.group1 = QGroupBox("Coordinate 1")
-        group1_layout = QVBoxLayout()
-        self.group1.setLayout(group1_layout)
-
-        self.coord1_inputs = []
-        coord1_layout = QHBoxLayout()
-        for label in ['X:', 'Y:', 'Z:']:
-            lbl = QLabel(label)
-            input_field = QLineEdit()
-            input_field.setPlaceholderText("0.0")
-            coord1_layout.addWidget(lbl)
-            coord1_layout.addWidget(input_field)
-            self.coord1_inputs.append(input_field)
-        group1_layout.addLayout(coord1_layout)
-
-        # Radio buttons for vector/point
-        self.vector1_radio = QRadioButton("Vector")
-        self.point1_radio = QRadioButton("Point")
-        self.vector1_radio.setChecked(True)
-        radio1_layout = QHBoxLayout()
-        radio1_layout.addWidget(self.vector1_radio)
-        radio1_layout.addWidget(self.point1_radio)
-        group1_layout.addLayout(radio1_layout)
-        main_layout.addWidget(self.group1)
-
-        # Coordinate input for second vector/point
-        self.group2 = QGroupBox("Coordinate 2")
-        group2_layout = QVBoxLayout()
-        self.group2.setLayout(group2_layout)
-
-        self.coord2_inputs = []
-        coord2_layout = QHBoxLayout()
-        for label in ['X:', 'Y:', 'Z:']:
-            lbl = QLabel(label)
-            input_field = QLineEdit()
-            input_field.setPlaceholderText("0.0")
-            coord2_layout.addWidget(lbl)
-            coord2_layout.addWidget(input_field)
-            self.coord2_inputs.append(input_field)
-        group2_layout.addLayout(coord2_layout)
-
-        # Radio buttons for vector/point
-        self.vector2_radio = QRadioButton("Vector")
-        self.point2_radio = QRadioButton("Point")
-        self.vector2_radio.setChecked(True)
-        radio2_layout = QHBoxLayout()
-        radio2_layout.addWidget(self.vector2_radio)
-        radio2_layout.addWidget(self.point2_radio)
-        group2_layout.addLayout(radio2_layout)
-        main_layout.addWidget(self.group2)
-
-        # Coordinate input for third vector/point
-        self.group3 = QGroupBox("Coordinate 3")
-        group3_layout = QVBoxLayout()
-        self.group3.setLayout(group3_layout)
-
-        self.coord3_inputs = []
-        coord3_layout = QHBoxLayout()
-        for label in ['X:', 'Y:', 'Z:']:
-            lbl = QLabel(label)
-            input_field = QLineEdit()
-            input_field.setPlaceholderText("0.0")
-            coord3_layout.addWidget(lbl)
-            coord3_layout.addWidget(input_field)
-            self.coord3_inputs.append(input_field)
-        group3_layout.addLayout(coord3_layout)
-
-        # Radio buttons for vector/point
-        self.vector3_radio = QRadioButton("Vector")
-        self.point3_radio = QRadioButton("Point")
-        self.vector3_radio.setChecked(True)
-        radio3_layout = QHBoxLayout()
-        radio3_layout.addWidget(self.vector3_radio)
-        radio3_layout.addWidget(self.point3_radio)
-        group3_layout.addLayout(radio3_layout)
-        main_layout.addWidget(self.group3)
+        # Create coordinate input groups
+        self.coord_inputs = [
+            CoordinateInput("Coordinate 1"),
+            CoordinateInput("Coordinate 2"),
+            CoordinateInput("Coordinate 3")
+        ]
+        for coord_input in self.coord_inputs:
+            main_layout.addWidget(coord_input.get_widget())
 
         # Calculation buttons
         button_layout = QHBoxLayout()
-        operations = ["Add", "Subtract", "Dot Product", "Cross Product", "Plane Equation", "Alt"]
+        operations = ["Addition", "Subtraktion", "Skalar Produkt", "Kryds Produkt", "Planens Ligning", "Alt"]
         self.buttons = {}
         for op in operations:
             btn = QPushButton(op)
@@ -109,39 +85,26 @@ class VectorCalculator(QWidget):
         self.result_display.setPlaceholderText("Calculation results will appear here...")
         main_layout.addWidget(self.result_display)
 
-    def get_coordinates(self, inputs):
-        try:
-            coords = [float(inp.text()) if inp.text().strip() else 0.0 for inp in inputs]
-            return np.array(coords)
-        except ValueError:
-            return None
-
     def calculate(self, operation):
-        # Get coordinates
-        coord1 = self.get_coordinates(self.coord1_inputs)
-        coord2 = self.get_coordinates(self.coord2_inputs)
-        coord3 = self.get_coordinates(self.coord3_inputs) if operation in ("Plane Equation", "Alt") else None
+        # Get coordinates and types
+        coord1 = self.coord_inputs[0].get_coordinates()
+        coord2 = self.coord_inputs[1].get_coordinates()
+        coord3 = self.coord_inputs[2].get_coordinates() if operation in ("Plane Equation", "Alt") else None
 
-
-        if coord1 is None or coord2 is None or (operation == "Plane Equation" and coord3 is None):
+        if coord1 is None or coord2 is None or (operation in ("Plane Equation", "Alt") and coord3 is None):
             self.result_display.setText("Error: Please enter valid numbers for coordinates.")
             return
 
-        # Determine types
-        type1 = "Vector" if self.vector1_radio.isChecked() else "Point"
-        type2 = "Vector" if self.vector2_radio.isChecked() else "Point"
-        type3 = (
-                "Vector" if self.vector3_radio.isChecked()
-                else "Point" if operation == "Plane Equation"
-                else "Point" if operation == "Alt"
-                else None
-            )
+        # Get types
+        type1 = self.coord_inputs[0].get_type()
+        type2 = self.coord_inputs[1].get_type()
+        type3 = self.coord_inputs[2].get_type() if operation in ("Plane Equation", "Alt") else None
 
         # Initialize result
         result_text = f"Operation: {operation}\n"
         result_text += f"Coordinate 1 ({type1}): {coord1}\n"
         result_text += f"Coordinate 2 ({type2}): {coord2}\n"
-        if operation == "Plane Equation":
+        if operation in ("Plane Equation", "Alt"):
             result_text += f"Coordinate 3 ({type3}): {coord3}\n"
 
         # Perform calculations using VectorOperations
@@ -176,8 +139,6 @@ class VectorCalculator(QWidget):
                 result_text += f"Normalvektor: [{a} {b} {c}]\n"
                 result_text += f"Plane Equation: {a}x + {b}y + {c}z = {d}\n"
                 result_text += f"Plane Equation: {a}x + {b}y + {c}z {-d} = 0\n"
-
-                
             else:
                 result_text += "Error: Unknown operation."
         except Exception as e:
