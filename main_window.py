@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QMainWindow, QStackedWidget, QMenu
 from PySide6.QtGui import QAction
 from PySide6.QtCore import Qt
 from home_screen import (HomeScreen, VectorCalculator, EnthalpyScreen, PDFViewerScreen, 
-                         GraphWarScreen, EditorScreen, SettingsScreen, FormulaCollectionScreen)
+                         GraphWarScreen, EditorScreen, SettingsScreen)
 from triangle_calculator import TriangleCalculator
 
 class MainWindow(QMainWindow):
