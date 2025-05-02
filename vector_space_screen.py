@@ -70,7 +70,7 @@ class VectorCalculator(QWidget):
 
         # Calculation buttons
         button_layout = QHBoxLayout()
-        operations = ["Add", "Subtract", "Dot Product", "Cross Product", "Plane Equation", "Alt"]
+        operations = ["Addition", "Subtraktion", "Skalar Produkt", "Kryds Produkt", "Planens Ligning", "Alt"]
         self.buttons = {}
         for op in operations:
             btn = QPushButton(op)
