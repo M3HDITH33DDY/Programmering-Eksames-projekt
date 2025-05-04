@@ -4,7 +4,6 @@ from PySide6.QtGui import QAction
 from PySide6.QtCore import Qt
 from home_screen import (HomeScreen, VectorCalculator, EnthalpyScreen, PDFViewerScreen, 
                          GraphWarScreen, EditorScreen, SettingsScreen, TriangleCalculator)
-from screens.triangle_calculator import TriangleCalculator
 
 class MainWindow(QMainWindow):
     """Hovedvindue til at navigere mellem forskellige skærme i en mørk-tema brugergrænseflade."""
