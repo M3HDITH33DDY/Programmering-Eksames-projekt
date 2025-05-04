@@ -131,8 +131,7 @@ class DraggableButton(QPushButton):
         """Skift til den tilknyttede skærm, hvis en er defineret."""
         if self.target_screen and self.main_window:
             self.main_window.stacked_widget.setCurrentWidget(self.target_screen)
-        else:
-            print(f"Button {self.button_id} pressed! No target screen or main_window assigned.")
+        
 
 class HomeScreen(QWidget):
     """Hjemmeskærm med draggable knapper til Matematik og Kemi i en mørk-tema brugergrænseflade."""
