@@ -90,12 +90,15 @@ class VectorCalculator(QWidget):
         # Angivelse af koordinater og type (Vektor eller Punkt)
         coord1 = self.coord_inputs[0].get_coordinates()
         coord2 = self.coord_inputs[1].get_coordinates()
-        coord3 = self.coord_inputs[2].get_coordinates() if operation in ("Planens Ligning", "Alt") else None
-
-        if coord1 is None or coord2 is None or (operation in ("Planens Ligning", "Alt") and coord3 is None):
+        coord3 = None
+        if operation in ("Planens Ligning", "Alt"):
+            coord3 = self.coord_inputs[2].get_coordinates()
+            if coord3 is None:
+                coord3 = np.array([0.0, 0.0, 0.0])#Antager at koordinat 3 er i Origo (0,0,0)
+        
+        if coord1 is None or coord2 is None:
             self.result_display.setText("Fejl: Angiv valide koordinater")
             return
-
         # Angivelse af type
         type1 = self.coord_inputs[0].get_type()
         type2 = self.coord_inputs[1].get_type()
