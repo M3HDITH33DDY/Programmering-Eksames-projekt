@@ -92,7 +92,7 @@ class MainWindow(QMainWindow):
         menubar = self.menuBar()
 
         # Fil menu
-        file_menu = menubar.addMenu("Fil")
+        file_menu = menubar.addMenu("Filer")
 
         home_action = QAction("Hjem", self)
         home_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.home_screen))
