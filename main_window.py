@@ -98,7 +98,7 @@ class MainWindow(QMainWindow):
         home_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.home_screen))
         file_menu.addAction(home_action)
 
-        editor_action = QAction("Teksteditor", self)
+        editor_action = QAction("Notesblok", self)
         editor_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.editor_screen))
         file_menu.addAction(editor_action)
 
