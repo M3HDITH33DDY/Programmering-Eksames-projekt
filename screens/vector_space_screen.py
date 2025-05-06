@@ -7,7 +7,7 @@ from PySide6.QtCore import Qt
 from screens.vector_calculations import VectorOperations
 
 class CoordinateInput(QWidget):
-    """Oprettelse af indput felt som et objekt (3 anvendes)"""
+    """Oprettelse af input felt som et objekt (3 anvendes)"""
     def __init__(self, title):
         super().__init__()
         self.group = QGroupBox(title)
@@ -16,7 +16,7 @@ class CoordinateInput(QWidget):
 
         # Input felt for koordinater
         self.inputs = []
-        coord_layout = QHBoxLayout()
+        coord_layout = QVBoxLayout()
         for label in ['X:', 'Y:', 'Z:']:
             lbl = QLabel(label)
             input_field = QLineEdit()
@@ -59,14 +59,15 @@ class VectorCalculator(QWidget):
         main_layout = QVBoxLayout()
         self.setLayout(main_layout)
 
-        # Koordinater i grupper
+        coords_layout = QHBoxLayout()
         self.coord_inputs = [
-            CoordinateInput("1. Koodinat"),
-            CoordinateInput("2. Koodinat"),
-            CoordinateInput("3. Koodinat")
+            CoordinateInput("1. Koordinat"),
+            CoordinateInput("2. Koordinat"),
+            CoordinateInput("3. Koordinat")
         ]
         for coord_input in self.coord_inputs:
-            main_layout.addWidget(coord_input.get_widget())
+            coords_layout.addWidget(coord_input.get_widget())
+        main_layout.addLayout(coords_layout)
 
         # Knapper for de forskellige beregninger
         button_layout = QHBoxLayout()
