@@ -56,7 +56,7 @@ class MainWindow(QMainWindow):
                 background-color: #14532D;
             }
         """)
-        self.setWindowTitle("Multi Program")
+        self.setWindowTitle("IMV")
         self.setGeometry(100, 100, 1200, 600)
 
         # Central wiget
@@ -128,11 +128,11 @@ class MainWindow(QMainWindow):
 
         # Math menu
         math_menu = menubar.addMenu("Matematik")
-        vector_action = QAction("Vektorer", self)
+        vector_action = QAction("Vektorer Beregner", self)
         vector_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.vector_calculator_screen))
         math_menu.addAction(vector_action)
 
-        triangle_action = QAction("Trekantsberegner", self)
+        triangle_action = QAction("Trekant Beregner", self)
         triangle_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.triangle_calculator_screen))
         math_menu.addAction(triangle_action)
 
