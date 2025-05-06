@@ -64,7 +64,7 @@ class VectorOperations:
             normal = np.cross(coord1, coord2)
             point = coord3
         else:
-            raise ValueError("Planens ligning kræver 3 vektorer eller 2 vektorer og 1 punkt")
+            raise ValueError("Planens ligning kræver 3 punkter eller 2 vektorer og 1 punkt")
 
         # Tjekker om normalvektoren er lig 0
         if np.allclose(normal, 0):
@@ -75,3 +75,4 @@ class VectorOperations:
         d = np.dot(normal, point)
         
         return a, b, c, d
+    
