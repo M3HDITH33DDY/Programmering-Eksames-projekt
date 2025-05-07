@@ -106,10 +106,6 @@ class MainWindow(QMainWindow):
         settings_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.settings_screen))
         file_menu.addAction(settings_action)
 
-        enthalpy_action = QAction("Entalpi Beregner", self)
-        enthalpy_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.enthalpy_screen))
-        file_menu.addAction(enthalpy_action)
-
         game_action = QAction("Grafkrig", self)
         game_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.game_screen))
         file_menu.addAction(game_action)
