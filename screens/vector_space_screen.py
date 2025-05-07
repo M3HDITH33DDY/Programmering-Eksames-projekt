@@ -139,10 +139,14 @@ class VectorCalculator(QWidget):
                 result_text += f"Prikprodukt af vektor 1 og 2: {result}\n"
                 result = VectorOperations.cross_product(coord1, coord2, type1, type2)
                 result_text += f"Normlvektor af vektor 1 og 2: {result}\n"
+                deg, rad = VectorOperations.angle(coord1, coord2, coord3, type1, type2, type3)
+                result_text += f"Vinkel mellem vektorer i deg: {deg:2f}\n"
+                result_text += f"Vinkel mellem vektorer i rad: {rad:2f}\n"
                 a, b, c, d = VectorOperations.plane_equation(coord1, coord2, coord3, type1, type2, type3)
                 result_text += f"Normalvektor: [{a} {b} {c}]\n"
                 result_text += f"Planens Ligning: {a}x + {b}y + {c}z = {d}\n"
                 result_text += f"Planens Ligning: {a}x + {b}y + {c}z {-d} = 0\n"
+                
             else:
                 result_text += "Fejl. Ukendt Handling"
         except Exception as e:
