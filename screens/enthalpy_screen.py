@@ -28,6 +28,23 @@ class EditorButton(QPushButton):
             }
         """)
 
+class LineEdit(QLineEdit):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setStyleSheet("""
+            QLineEdit {
+                background-color: #374151;
+                color: #FFFFFF;
+                border: 1px solid #4B5563;
+                border-radius: 8px;
+                padding: 8px;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+            }
+        """)
+
+
+
 class EnthalpyScreen(QWidget):
     """En skærm til at beregne molar standard entalpi og administrere molekyledata i en mørk-tema brugergrænseflade."""
 
@@ -118,19 +135,9 @@ class EnthalpyScreen(QWidget):
 
         # Reaktion input og knap
         reaction_layout = QHBoxLayout()
-        self.reaction_input = QLineEdit()
+        self.reaction_input = LineEdit()
         self.reaction_input.setPlaceholderText("Indsæt reaktion (f.eks., 2H2 + O2 -> 2H2O)")
-        self.reaction_input.setStyleSheet("""
-            QLineEdit {
-                background-color: #374151;
-                color: #FFFFFF;
-                border: 1px solid #4B5563;
-                border-radius: 8px;
-                padding: 8px;
-                font-family: Arial, sans-serif;
-                font-size: 14px;
-            }
-        """)
+        
         reaction_layout.addWidget(self.reaction_input)
 
         calculate_button = EditorButton("Beregn ΔH°")
@@ -151,34 +158,14 @@ class EnthalpyScreen(QWidget):
 
         # tilføjer kemikalie og knap
         add_layout = QHBoxLayout()
-        self.compound_input = QLineEdit()
+        self.compound_input = LineEdit()
         self.compound_input.setPlaceholderText("Nyt molekyle (f.eks., CO2)")
-        self.compound_input.setStyleSheet("""
-            QLineEdit {
-                background-color: #374151;
-                color: #FFFFFF;
-                border: 1px solid #4B5563;
-                border-radius: 8px;
-                padding: 8px;
-                font-family: Arial, sans-serif;
-                font-size: 14px;
-            }
-        """)
+        
         add_layout.addWidget(self.compound_input)
 
-        self.delta_h_f_input = QLineEdit()
+        self.delta_h_f_input = LineEdit()
         self.delta_h_f_input.setPlaceholderText("ΔHf° (kJ/mol)")
-        self.delta_h_f_input.setStyleSheet("""
-            QLineEdit {
-                background-color: #374151;
-                color: #FFFFFF;
-                border: 1px solid #4B5563;
-                border-radius: 8px;
-                padding: 8px;
-                font-family: Arial, sans-serif;
-                font-size: 14px;
-            }
-        """)
+        
         add_layout.addWidget(self.delta_h_f_input)
 
         add_button = EditorButton("Tilføj Molekyle")
