@@ -1,7 +1,7 @@
 import os
 from PySide6.QtWidgets import (QWidget, QVBoxLayout,QLabel, 
-                              QLineEdit, QTreeView, QSplitter,
-                              QFileDialog, QSizePolicy)
+                               QLineEdit, QTreeView, QSplitter,
+                               QFileDialog, QSizePolicy)
 from PySide6.QtGui import QIcon, QStandardItemModel, QStandardItem
 from PySide6.QtCore import Qt, QUrl, QSettings, QDir
 from PySide6.QtWebEngineWidgets import QWebEngineView
