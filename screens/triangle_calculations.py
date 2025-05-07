@@ -55,27 +55,30 @@ class TriangleCalculations:
         }
 
     @staticmethod
-    def calculate_from_side_angles(side_a, A, B, C):
-        """Beregn resterende sider, areal og omkreds baseret på én side og tre vinkler."""
+    def calculate_from_side_angles(known_side, known_side_label, A, B, C):
+        """Beregn resterende sider, areal og omkreds baseret på én kendt side og tre vinkler."""
+        import math
         TriangleCalculations.validate_triangle_angles(A, B, C)
-        
+
         # Brug sinusrelation: a/sin(A) = b/sin(B) = c/sin(C)
-        a = side_a
-        b = a * math.sin(math.radians(B)) / math.sin(math.radians(A))
-        c = a * math.sin(math.radians(C)) / math.sin(math.radians(A))
-        
-        # Valider de beregnede sider
-        TriangleCalculations.validate_triangle_sides(a, b, c)
-        
-        # Areal ved formel: area = (a * b * sin(C)) / 2
-        area = (a * b * math.sin(math.radians(C))) / 2
-        
-        # Omkreds
-        perimeter = a + b + c
-        
+        angles = {'A': A, 'B': B, 'C': C}
+        sides = {}
+
+        # Udregn skalar: known_side / sin(known_angle)
+        angle_opposite_known = {'a': 'A', 'b': 'B', 'c': 'C'}[known_side_label]
+        scale = known_side / math.sin(math.radians(angles[angle_opposite_known]))
+
+        # Beregn alle sider med skalaen
+        for side, angle in zip(['a', 'b', 'c'], ['A', 'B', 'C']):
+            sides[side] = scale * math.sin(math.radians(angles[angle]))
+
+        # Areal ved formel: (1/2)*ab*sin(C), her bruger vi a, b og vinkel C
+        area = (sides['a'] * sides['b'] * math.sin(math.radians(angles['C']))) / 2
+        perimeter = sides['a'] + sides['b'] + sides['c']
+
         return {
             "perimeter": perimeter,
             "area": area,
-            "angles": {"A": A, "B": B, "C": C},
-            "sides": {"a": a, "b": b, "c": c}
+            "angles": angles,
+            "sides": sides
         }

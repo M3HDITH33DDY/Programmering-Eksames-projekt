@@ -172,9 +172,20 @@ class TriangleCalculator(QWidget):
                 result = TriangleCalculations.calculate_from_sides(*sides, angles=angles if angles is not None and any(a > 0 for a in angles) else None)
                 self.display_results(result, "Beregning ud fra sider")
             # Fallback til vinkler og én side, hvis sider mangler eller er ugyldige
-            elif angles is not None and all(a > 0 for a in angles) and sides is not None and sides[0] > 0:
-                result = TriangleCalculations.calculate_from_side_angles(sides[0], *angles)
-                self.display_results(result, "Beregning ud fra vinkler og side a")
+            elif angles is not None and all(a > 0 for a in angles) and sides is not None:
+                # Find første gyldige side og dens navn
+                side_labels = ['a', 'b', 'c']
+                for i, s in enumerate(sides):
+                    if s > 0:
+                        known_side = s
+                        known_side_label = side_labels[i]
+                        break
+                else:
+                    self.result_display.setText("Fejl: Indtast mindst én gyldig side.")
+                    return
+
+                result = TriangleCalculations.calculate_from_side_angles(known_side, known_side_label, *angles)
+                self.display_results(result, f"Beregning ud fra vinkler og side {known_side_label}")
             else:
                 self.result_display.setText("Fejl: Indtast gyldige positive tal for alle sider eller én side og alle vinkler.")
         except Exception as e:
