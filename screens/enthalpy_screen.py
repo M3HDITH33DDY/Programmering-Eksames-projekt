@@ -9,10 +9,10 @@ class EditorButton(QPushButton):
     """En knap med design inspireret af HomeScreen's DraggableButton, uden drag-and-drop."""
     def __init__(self, text, parent=None):
         super().__init__(text, parent)
-        self.setFixedSize(QSize(160, 90))
+        self.setFixedSize(QSize(140, 45))
         self.setStyleSheet("""
             QPushButton {
-                border-radius: 45px;
+                border-radius: 15px;
                 background-color: #15803D;
                 color: #FFFFFF;
                 padding: 12px;
