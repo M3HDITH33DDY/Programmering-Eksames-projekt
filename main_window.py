@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QMainWindow, QStackedWidget, QMenu
 from PySide6.QtGui import QAction
 from PySide6.QtCore import Qt
 from home_screen import (HomeScreen, VectorCalculator, EnthalpyScreen, PDFViewerScreen, 
-                         GraphWarScreen, EditorScreen, SettingsScreen, TriangleCalculator)
+                         GraphWarScreen, EditorScreen, SettingsScreen, TriangleCalculator, RecurrenceGUI)
 
 class MainWindow(QMainWindow):
     """Hovedvindue til at navigere mellem forskellige skærme i en mørk-tema brugergrænseflade."""
@@ -72,6 +72,7 @@ class MainWindow(QMainWindow):
         self.pdf_viewer_screen = PDFViewerScreen()
         self.vector_calculator_screen = VectorCalculator()
         self.triangle_calculator_screen = TriangleCalculator()
+        self.recurrene_calculator_screen = RecurrenceGUI()
         self.home_screen = HomeScreen(self)  
 
         # Tilføj skærme til knapperne
@@ -83,6 +84,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.pdf_viewer_screen)
         self.stacked_widget.addWidget(self.vector_calculator_screen)
         self.stacked_widget.addWidget(self.triangle_calculator_screen)
+        self.stacked_widget.addWidget(self.recurrene_calculator_screen)
 
         # Fremstilling af menubar
         self.create_menu_bar()
@@ -131,6 +133,10 @@ class MainWindow(QMainWindow):
         triangle_action = QAction("Trekant Beregner", self)
         triangle_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.triangle_calculator_screen))
         math_menu.addAction(triangle_action)
+
+        recurrene_action = QAction("Rekurs", self)
+        recurrene_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.recurrene_calculator_screen))
+        math_menu.addAction(recurrene_action)
 
         # Chemistry menu
         chemistry_menu = menubar.addMenu("Kemi")

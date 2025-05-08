@@ -151,9 +151,8 @@ class GraphWarScreen(QWidget):
             """Opretter en minimum, idet enemy er opsat i et givende 
             startinterval for x-værdier, så vi ikke behøver at gennemgå hele listen af points """
             enemy_min_x = self.width() - 90
-            start_index = int((enemy_min_x - 100) / 0.5)  # 
-            
-            # Tjek om vi rammer nogle fjender
+            start_index = int((enemy_min_x - 100) / 0.5)
+            #Tjekker om vi rammer en fjende  
             hit_any = False
             for enemy in self.enemies:
                 if enemy.state:
