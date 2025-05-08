@@ -148,17 +148,21 @@ class GraphWarScreen(QWidget):
                 screen_y = max(-10, min(h, screen_y))  # Hold grafen inde i området
                 self.graph_points.append(QPoint(int(x), screen_y))
 
+            """Opretter en minimum, idet enemy er opsat i et givende 
+            startinterval for x-værdier, så vi ikke behøver at gennemgå hele listen af points """
+            enemy_min_x = self.width() - 90
+            start_index = int((enemy_min_x - 100) / 0.5)  # 
+            
             # Tjek om vi rammer nogle fjender
             hit_any = False
             for enemy in self.enemies:
                 if enemy.state:
-                    for point in self.graph_points:
+                    for point in self.graph_points[start_index:]:
                         distance = math.hypot(point.x() - enemy.x, point.y() - enemy.y)
                         if distance < enemy.size + 5:
                             enemy.state = False
                             hit_any = True
-                            break  # Stop når vi rammer én fjende
-
+                            break                      
             # Opdater besked
             if all(not enemy.state for enemy in self.enemies):
                 self.result_label.setText("Alle modstandere ramt, tryk enter for ny runde")
