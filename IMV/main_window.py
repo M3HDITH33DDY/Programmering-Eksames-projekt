@@ -59,7 +59,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("IMV")
         self.setGeometry(100, 100, 1200, 600)
 
-        # Central wiget
+        # Central widget
         self.stacked_widget = QStackedWidget()
         self.stacked_widget.setStyleSheet("background-color: #1E1E1E;")
         self.setCentralWidget(self.stacked_widget)
@@ -124,7 +124,7 @@ class MainWindow(QMainWindow):
         exit_action.triggered.connect(self.close)
         file_menu.addAction(exit_action)
 
-        # Math menu
+        # Matematik menu
         math_menu = menubar.addMenu("Matematik")
         vector_action = QAction("Vektorer Beregner", self)
         vector_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.vector_calculator_screen))
@@ -138,7 +138,7 @@ class MainWindow(QMainWindow):
         recurrene_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.recurrene_calculator_screen))
         math_menu.addAction(recurrene_action)
 
-        # Chemistry menu
+        # Kemi menu
         chemistry_menu = menubar.addMenu("Kemi")
         enthalpy_screen_action = QAction("Entalpi Beregner", self)
         enthalpy_screen_action.triggered.connect(lambda: self.stacked_widget.setCurrentWidget(self.enthalpy_screen))

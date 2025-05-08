@@ -11,8 +11,6 @@ from IMV.screens.reccurence_calculations import RecurrenceSolver, format_polynom
 class RecurrenceGUI(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Løs rekursionsligning")
-        self.setMinimumWidth(650)
 
         layout = QVBoxLayout(self)
 
@@ -37,28 +35,38 @@ class RecurrenceGUI(QWidget):
         layout.addWidget(self.result_area)
 
     def solve(self):
+        # Hent brugerens indtastede rekursive ligning og startværdier
         equation = self.input_line.text()
         init_vals = self.initial_values.toPlainText().strip()
+        
         try:
+            # Opret en instans af løseren med ligningen og startværdierne
             solver = RecurrenceSolver(equation, init_vals)
 
-            if init_vals:  # Brugeren har angivet startværdier
+            if init_vals:  # Hvis brugeren har angivet startværdier
+                # Beregn koefficienter, rødder, generel løsning og fuld løsning
                 coeffs, roots, general, full = solver.solve()
-            else:  # Kun generel løsning
+            else:  # Kun generel løsning uden konstanter
                 coeffs, roots, general = solver.solve_general_only()
                 full = "Ingen startværdier angivet – konstanter ikke bestemt."
 
+            # Formater rødderne, afrund reelle rødder og vis komplekse som tekst
             root_lines = ", ".join([
                 f"{r.real:.3f}" if abs(r.imag) < 1e-10 else str(r)
                 for r in roots
             ])
+
+            # Sammensæt resultattekst til visning
             result = (
                 f"Karakteristisk ligning:\n{format_polynomial(coeffs)} = 0\n\n"
                 f"Rødder: {root_lines}\n\n"
                 f"Generel løsning:\na(n) = {general}\n\n"
                 f"{'Løsning med startværdier:\na(n) = ' + full if init_vals else full}"
             )
+
+            # Vis resultatet i brugergrænsefladens tekstfelt
             self.result_area.setText(result)
 
         except Exception as e:
+            # Vis en fejlmeddelelse hvis der opstår en undtagelse
             QMessageBox.critical(self, "Fejl", str(e))

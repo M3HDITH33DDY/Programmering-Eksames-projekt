@@ -71,8 +71,7 @@ class EnthalpyScreen(QWidget):
             PATH = os.path.dirname(os.path.abspath(__file__))
             self.json_file = os.path.join(PATH, "enthalpy_data.json")
         
-        print(f"Loading JSON from: {self.json_file}")  # Debug
-        print(f"JSON file exists: {os.path.exists(self.json_file)}")  # Debug
+        
         self.data = self.load_data()
 
         # Main layout

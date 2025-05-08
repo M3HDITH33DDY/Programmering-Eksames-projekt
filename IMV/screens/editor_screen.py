@@ -31,7 +31,7 @@ class EditorScreen(QWidget):
         layout.setSpacing(10)
 
         # Title label
-        label = QLabel("Teksteditor")
+        label = QLabel("Notesblok")
         label.setAlignment(Qt.AlignCenter)
         label.setStyleSheet("""
             font-size: 24px;
