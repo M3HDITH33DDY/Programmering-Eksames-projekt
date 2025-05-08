@@ -8,7 +8,7 @@ from screens.pdf_viewer import PDFViewerScreen
 from screens.enthalpy_screen import EnthalpyScreen
 from screens.vector_space_screen import VectorCalculator
 from screens.triangle_calculator import TriangleCalculator
-from screens.rekus_screen import RecurrenceGUI
+from screens.reccurence_screen import RecurrenceGUI
 
 class DraggableButton(QPushButton):
     """En knap med drag-and-drop funktionalitet og design, der matcher EditorButton."""
