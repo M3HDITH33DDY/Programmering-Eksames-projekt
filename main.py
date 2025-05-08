@@ -1,7 +1,7 @@
 import sys
 import traceback
 from PySide6.QtWidgets import QApplication, QMessageBox
-from main_window import MainWindow
+from IMV.main_window import MainWindow
 
 def main():
     app = QApplication(sys.argv)
