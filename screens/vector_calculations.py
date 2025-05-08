@@ -40,6 +40,41 @@ class VectorOperations:
             raise ValueError("Kryds produkt kræver to vektorer")
         return np.cross(coord1, coord2)
 
+
+    @staticmethod
+    def angle(coord1, coord2, coord3, type1, type2, type3):
+        # To vektorer
+        if type1 == "Vektor" and type2 == "Vektor" and (coord3 is None or type3 == "Vektor"):
+            vec1 = np.array(coord1)
+            vec2 = np.array(coord2)
+
+        # Tre punkter
+        elif type1 == "Punkt" and type2 == "Punkt" and type3 == "Punkt":
+            vec1 = np.array(coord2) - np.array(coord1)
+            vec2 = np.array(coord3) - np.array(coord1)
+
+        else:
+            raise ValueError("Ugyldige typer eller manglende input. Brug enten to vektorer eller tre punkter.")
+
+        # Beregn vinkel mellem vec1 og vec2
+        dot_product = np.dot(vec1, vec2)
+        norm_vec1 = np.linalg.norm(vec1)
+        norm_vec2 = np.linalg.norm(vec2)
+
+        if norm_vec1 == 0 or norm_vec2 == 0:
+            raise ValueError("En eller begge vektorer har længde 0, så vinkel kan ikke defineres.")
+
+        cos_theta = dot_product / (norm_vec1 * norm_vec2)
+        cos_theta = np.clip(cos_theta, -1.0, 1.0)
+
+        theta_rad = np.arccos(cos_theta)
+        theta_deg = np.degrees(theta_rad)
+
+        return theta_deg, theta_rad
+
+
+            
+
     @staticmethod
     def plane_equation(coord1, coord2, coord3, type1, type2, type3):
         VectorOperations.validate_coordinates(coord1, coord2, coord3)
