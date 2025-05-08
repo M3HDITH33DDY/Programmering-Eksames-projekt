@@ -1,21 +1,29 @@
 import os
-from PySide6.QtWidgets import (QWidget, QVBoxLayout,QLabel, 
+from PySide6.QtWidgets import (QWidget, QVBoxLayout, QLabel, 
                                QLineEdit, QTreeView, QSplitter,
                                QFileDialog, QSizePolicy)
 from PySide6.QtGui import QIcon, QStandardItemModel, QStandardItem
 from PySide6.QtCore import Qt, QUrl, QSettings, QDir
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEnginePage
+import sys
 
-#PDF læser er hentet udefra, og ændret således, det kan anvendes i programmet
-#Author: BBC-Esq
-#Link til Originale program: https://github.com/BBC-Esq/PySide6_PDF_Viewer/blob/main/pyside6_pdfviewer.py
+# PDF læser er hentet udefra, og ændret således, det kan anvendes i programmet
+# Author: BBC-Esq
+# Link til Originale program: https://github.com/BBC-Esq/PySide6_PDF_Viewer/blob/main/pyside6_pdfviewer.py
 
 class PDFFileSystemModel(QStandardItemModel):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setHorizontalHeaderLabels(["PDF Files and Folders"])
-        self.root_path = os.path.dirname(os.path.abspath(__file__))
+        try:
+            PATH = sys._MEIPASS  # PyInstaller
+            self.root_path = os.path.join(PATH, "IMV", "screens", "PDF-Filer")
+        except AttributeError:
+            PATH = os.path.dirname(os.path.abspath(__file__))
+            self.root_path = os.path.join(PATH, "PDF-Filer")  # Fixed to point to PDF-Filer
+        print(f"PDF root path: {self.root_path}")  # Debug
+        print(f"PDF directory exists: {os.path.exists(self.root_path)}")  # Debug
         self.current_path = self.root_path
         self.populate_model(self.invisibleRootItem(), self.current_path)
         
