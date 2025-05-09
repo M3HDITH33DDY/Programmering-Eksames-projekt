@@ -239,7 +239,7 @@ class HomeScreen(QWidget):
             button.set_icon(image_paths[i])  # Sæt ikon med ny metode
             button.set_drag_enabled(True)
         
-        # Add buttons to layouts
+        # Tilføjer knapper til containers
         for i in range(3):
             self.row1_button_layout.addWidget(self.buttons[i])
         for i in range(3, 6):

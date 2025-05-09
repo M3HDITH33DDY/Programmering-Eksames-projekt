@@ -7,7 +7,7 @@ class EditorScreen(QWidget):
 
     def __init__(self):
         super().__init__()
-        # Set dark mode stylesheet
+        # stylesheet for widgets
         self.setStyleSheet("""
             QWidget {
                 background-color: #1F2937;
@@ -25,12 +25,12 @@ class EditorScreen(QWidget):
             }
         """)
 
-        # Main layout with consistent margins and spacing
+        # Main layout med spacing
         layout = QVBoxLayout()
         layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(10)
 
-        # Title label
+        # Titel 
         label = QLabel("Notesblok")
         label.setAlignment(Qt.AlignCenter)
         label.setStyleSheet("""
@@ -41,11 +41,11 @@ class EditorScreen(QWidget):
         """)
         layout.addWidget(label)
 
-        # Text editor
+        
         self.text_edit = QTextEdit()
         layout.addWidget(self.text_edit)
 
-        # New file button
+        # Ny fil knap
         new_button = QPushButton("Ny Fil")
         new_button.setFixedHeight(40)
         new_button.setStyleSheet("""
@@ -68,7 +68,7 @@ class EditorScreen(QWidget):
         new_button.clicked.connect(self.new_file)
         layout.addWidget(new_button)
 
-        # Save button
+        # Gem knap
         save_button = QPushButton("Gem Tekst")
         save_button.setFixedHeight(40)
         save_button.setStyleSheet("""
@@ -91,7 +91,7 @@ class EditorScreen(QWidget):
         save_button.clicked.connect(self.save_text)
         layout.addWidget(save_button)
 
-        # Load button
+        # Indlæs knap
         load_button = QPushButton("Indlæs Tekst")
         load_button.setFixedHeight(40)
         load_button.setStyleSheet("""
