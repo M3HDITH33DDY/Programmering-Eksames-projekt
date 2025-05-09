@@ -11,36 +11,37 @@ class Enemy:
         
         self._state = True  # Levende
         self._size = 10  # Diameter
-        self._x = random.randint(width - 85, width - 55)
-        self._y = random.randint(50, height - 150)
+        self._x = random.randint(width - 85, width - 55) #Start x-pos
+        self._y = random.randint(50, height - 150) #Start y-pos
 
-        # Gem relativ position
+        # Gem relativ position mellem skærm (Anvendes til ændring af størrelse af vinduet)
         self._x_ratio = self._x / width
         self._y_ratio = self._y / height
 
     # ---- Properties ----
-    @property
+    #Getter for state
+    @property 
     def state(self):
-        return self._state
-
+        return self._state 
+    #setter for state
     @state.setter
     def state(self, value):
         if not isinstance(value, bool):
             raise ValueError("state skal være True eller False")
         self._state = value
-
+    #Getter for size
     @property
     def size(self):
         return self._size
-
+    #Getter for x-pos
     @property
     def x(self):
         return self._x
-
+    #Getter for y-pos
     @property
     def y(self):
         return self._y
-
+    #Opdatering af position, når vinduets størrelse ændres
     def update_position(self, new_width, new_height):
         self._x = int(self._x_ratio * new_width)
         self._y = int(self._y_ratio * new_height)
@@ -64,14 +65,14 @@ class GraphWarScreen(QWidget):
         self.layout.addWidget(self.scale_text)
 
         input_layout = QHBoxLayout()
-        self.function_input = QLineEdit("x**2 / 100")
-        self.scale_input = QLineEdit("0.01")
+        self.function_input = QLineEdit("x**2 / 100") #Start (Eksempel)
+        self.scale_input = QLineEdit("0.01") #Start skalering
         self.scale_input.setFixedWidth(120)
         input_layout.addWidget(QLabel("Funktion f(x) ="))
         input_layout.addWidget(self.function_input)
         input_layout.addWidget(self.scale_input)
         self.layout.addLayout(input_layout)
-
+        #Instruks for korrekt anvendelse, da der ikke er tilføjet ^=opløftet, men anvender numpy direkte
         self.instruction_label = QLabel("Brug 'x' som den variable (Anvend 'x**2' fremfor 'x^2', 'math.sin(x)', 'x/10').")
         self.instruction_label.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(self.instruction_label)
@@ -87,9 +88,7 @@ class GraphWarScreen(QWidget):
         
         self.setLayout(self.layout)
 
-        self.scale = 1
-
-        # Spiltilstand
+        # Spiltilstand, opretter lister for punkter og fjender
         self.graph_points = []
         self.enemies = []
         self.spawn_enemies()
@@ -123,10 +122,10 @@ class GraphWarScreen(QWidget):
 
     def update_graph(self):
         try:
-            function_str = self.function_input.text().strip()
+            function_str = self.function_input.text().strip() #Henter funktionen fra input
             if not function_str:
                 raise ValueError("Funktionen må ikke være blank")
-            self.scale = float(self.scale_input.text().strip())
+            self.scale = float(self.scale_input.text().strip()) #Henter skalering fra input
             if not self.scale:
                 raise ValueError("Funktionens skalering kan ikke være tom")
             safe_dict = {"math": math, "x": 0}
@@ -140,11 +139,11 @@ class GraphWarScreen(QWidget):
 
             x_values = np.arange(x_start, x_end, 0.5)
             for x in x_values:
-                adjusted_x = x - w // 6
+                adjusted_x = x - w // 6 #Den justerede x-akse er til venstre på skærmen (Giver større skydeplade)
                 safe_dict["x"] = adjusted_x
-                y = eval(function_str, {"__builtins__": {}}, safe_dict)
+                y = eval(function_str, {"__builtins__": {}}, safe_dict) #Omdanner tekst til matematisk udtryk (safe_dict anvendes så kode ikke kan angives og ødelægge programmet)
 
-                screen_y = h // 2 - (y*self.scale)
+                screen_y = h // 2 - (y*self.scale) 
                 screen_y = max(-10, min(h, screen_y))  # Hold grafen inde i området
                 self.graph_points.append(QPoint(int(x), screen_y))
 
@@ -156,8 +155,8 @@ class GraphWarScreen(QWidget):
             hit_any = False
             for enemy in self.enemies:
                 if enemy.state:
-                    for point in self.graph_points[start_index:]:
-                        distance = math.hypot(point.x() - enemy.x, point.y() - enemy.y)
+                    for point in self.graph_points[start_index:]:#Tjekker fra start_index og frem, sparer computerplads
+                        distance = math.hypot(point.x() - enemy.x, point.y() - enemy.y) #Beregner hypotynusen hermed afstanden
                         if distance < enemy.size + 5:
                             enemy.state = False
                             hit_any = True
@@ -174,13 +173,13 @@ class GraphWarScreen(QWidget):
     
         except Exception as e:
             self.result_label.setText(f"Fejl: {str(e)}")
-    
+    #Ændring af størrelse på vinduet
     def resizeEvent(self, event):
         super().resizeEvent(event)
         new_width = self.width()
         new_height = self.height()
         for enemy in self.enemies:
-            enemy.update_position(new_width, new_height)
+            enemy.update_position(new_width, new_height) #Kalder opdatering af position for fjender
         self.update()
 
     def reset_game(self):
@@ -188,7 +187,7 @@ class GraphWarScreen(QWidget):
         self.result_label.setText("Prøv at ramme alle fjender")
         self.graph_points = []
         self.update()
-
+#Hvis 'enter' trykkes starter spillet forfra
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
             self.reset_game()

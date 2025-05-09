@@ -12,6 +12,10 @@
         "delta_h_f": -241.8
     },
     {
+        "compound": "H2O(l)",
+        "delta_h_f": -285.8
+    },
+    {
         "compound": "CO2",
         "delta_h_f": -393.5
     },
@@ -22,5 +26,373 @@
     {
         "compound": "N2",
         "delta_h_f": 0.0
+    },
+    {
+        "compound": "NH3",
+        "delta_h_f": -46.11
+    },
+    {
+        "compound": "CO",
+        "delta_h_f": -110.525
+    },
+    {
+        "compound": "SO2",
+        "delta_h_f": -296.83
+    },
+    {
+        "compound": "SO3",
+        "delta_h_f": -395.72
+    },
+    {
+        "compound": "NO",
+        "delta_h_f": 90.25
+    },
+    {
+        "compound": "NO2",
+        "delta_h_f": 33.18
+    },
+    {
+        "compound": "HCl",
+        "delta_h_f": -92.307
+    },
+    {
+        "compound": "HBr",
+        "delta_h_f": -36.4
+    },
+    {
+        "compound": "HI",
+        "delta_h_f": 26.48
+    },
+    {
+        "compound": "HF",
+        "delta_h_f": -271.1
+    },
+    {
+        "compound": "C2H2",
+        "delta_h_f": 226.73
+    },
+    {
+        "compound": "C2H4",
+        "delta_h_f": 52.26
+    },
+    {
+        "compound": "C2H6",
+        "delta_h_f": -84.68
+    },
+    {
+        "compound": "C3H8",
+        "delta_h_f": -103.85
+    },
+    {
+        "compound": "C4H10",
+        "delta_h_f": -125.6
+    },
+    {
+        "compound": "C6H6",
+        "delta_h_f": 82.93
+    },
+    {
+        "compound": "C6H6(l)",
+        "delta_h_f": 49.03
+    },
+    {
+        "compound": "CH3OH",
+        "delta_h_f": -239.2
+    },
+    {
+        "compound": "C2H5OH",
+        "delta_h_f": -277.69
+    },
+    {
+        "compound": "CH3COOH",
+        "delta_h_f": -484.5
+    },
+    {
+        "compound": "Al",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "Al2O3",
+        "delta_h_f": -1675.7
+    },
+    {
+        "compound": "AlF3",
+        "delta_h_f": -1510.4
+    },
+    {
+        "compound": "AlCl3",
+        "delta_h_f": -704.2
+    },
+    {
+        "compound": "Ba",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "BaO",
+        "delta_h_f": -553.5
+    },
+    {
+        "compound": "BaSO4",
+        "delta_h_f": -1473.2
+    },
+    {
+        "compound": "C",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "C(diamond)",
+        "delta_h_f": 1.897
+    },
+    {
+        "compound": "Ca",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "CaO",
+        "delta_h_f": -635.09
+    },
+    {
+        "compound": "CaCO3",
+        "delta_h_f": -1206.92
+    },
+    {
+        "compound": "Ca(OH)2",
+        "delta_h_f": -986.09
+    },
+    {
+        "compound": "Cl2",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "F2",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "Fe",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "Fe2O3",
+        "delta_h_f": -824.2
+    },
+    {
+        "compound": "Fe3O4",
+        "delta_h_f": -1118.4
+    },
+    {
+        "compound": "K",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "KCl",
+        "delta_h_f": -436.747
+    },
+    {
+        "compound": "Mg",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "MgO",
+        "delta_h_f": -601.7
+    },
+    {
+        "compound": "Mg(OH)2",
+        "delta_h_f": -924.54
+    },
+    {
+        "compound": "Na",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "NaCl",
+        "delta_h_f": -411.153
+    },
+    {
+        "compound": "Na2CO3",
+        "delta_h_f": -1130.77
+    },
+    {
+        "compound": "P",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "P4",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "H3PO4",
+        "delta_h_f": -1279.0
+    },
+    {
+        "compound": "S",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "H2S",
+        "delta_h_f": -20.63
+    },
+    {
+        "compound": "Si",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "SiO2",
+        "delta_h_f": -910.94
+    },
+    {
+        "compound": "Zn",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "ZnO",
+        "delta_h_f": -348.28
+    },
+    {
+        "compound": "Ag",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "AgCl",
+        "delta_h_f": -127.068
+    },
+    {
+        "compound": "B",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "B2H6",
+        "delta_h_f": 36.4
+    },
+    {
+        "compound": "H3BO3",
+        "delta_h_f": -1094.3
+    },
+    {
+        "compound": "Br2",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "Br2(l)",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "I2",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "CH3Cl",
+        "delta_h_f": -81.9
+    },
+    {
+        "compound": "C2H5Cl",
+        "delta_h_f": -112.2
+    },
+    {
+        "compound": "CCl4",
+        "delta_h_f": -128.2
+    },
+    {
+        "compound": "CS2",
+        "delta_h_f": 89.7
+    },
+    {
+        "compound": "H2SO4",
+        "delta_h_f": -814.0
+    },
+    {
+        "compound": "HNO3",
+        "delta_h_f": -174.1
+    },
+    {
+        "compound": "N2O",
+        "delta_h_f": 82.05
+    },
+    {
+        "compound": "C2H5OH(l)",
+        "delta_h_f": -277.69
+    },
+    {
+        "compound": "C3H6",
+        "delta_h_f": 20.42
+    },
+    {
+        "compound": "C5H12",
+        "delta_h_f": -146.44
+    },
+    {
+        "compound": "C8H18",
+        "delta_h_f": -208.4
+    },
+    {
+        "compound": "Cu",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "CuO",
+        "delta_h_f": -157.3
+    },
+    {
+        "compound": "Hg",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "HgO",
+        "delta_h_f": -90.83
+    },
+    {
+        "compound": "Pb",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "PbO",
+        "delta_h_f": -219.0
+    },
+    {
+        "compound": "Sn",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "SnO2",
+        "delta_h_f": -577.63
+    },
+    {
+        "compound": "Ti",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "TiO2",
+        "delta_h_f": -944.0
+    },
+    {
+        "compound": "Cr",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "Cr2O3",
+        "delta_h_f": -1139.7
+    },
+    {
+        "compound": "Mn",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "MnO2",
+        "delta_h_f": -520.03
+    },
+    {
+        "compound": "Ni",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "NiO",
+        "delta_h_f": -239.7
+    },
+    {
+        "compound": "V",
+        "delta_h_f": 0.0
+    },
+    {
+        "compound": "V2O5",
+        "delta_h_f": -1550.6
     }
 ]
